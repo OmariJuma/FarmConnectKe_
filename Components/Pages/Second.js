@@ -35,7 +35,7 @@ const Second = ({navigation, route}) => {
           <Text style={styles.text}>{articles[id - 1].text}</Text>
           <LikeCommentShare/>
           <Input/>
-          <CommentSection/>
+          <CommentSection id={id}/>
         </View>
       )}
       {!id && <Text>Nothing</Text>}

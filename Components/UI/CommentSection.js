@@ -2,7 +2,20 @@ import React from 'react';
 import {View, Image} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import Comment from './Comment';
-const CommentSection = () => {
+import {articles} from './data';
+const CommentSection = (props) => {  
+  console.log(props.id);
+  const render=()=>{
+    if(props.id){
+      return articles[props.id].comments.map((comment,index)=>{
+        return <Comment key={index} text={comment.comment} name={comment.name} date={comment.date}/>
+      })
+      
+    }
+    
+
+  
+  }
   return (
     <View style={{padding:10, elevation:1}}>
       <Text
@@ -11,9 +24,9 @@ const CommentSection = () => {
           fontWeight: 'bold',
           marginTop: 30,
         }}>
-        Comments (20)
+        Comments 
       </Text>
-      <Comment />
+      {render()}
     </View>
   );
 };

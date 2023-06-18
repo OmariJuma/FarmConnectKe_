@@ -4,15 +4,17 @@ import {Card, Avatar} from 'react-native-paper';
 import LikeBtn from './LikeBtn';
 import CommentBtn from './CommentBtn';
 import ShareBtn from './ShareBtn';
+import { primaryColor, primaryColorVariant } from './AppBar';
 
-const Comment = () => {
+const Comment = (props) => {
   //   const [comment, setComment] = useState('');
   return (
     <Card
       style={{
         marginTop: 20,
         backgroundColor: 'white',
-      }}>
+        shadowColor:"black",
+}}>
       <View
         style={{
           flex: 1,
@@ -28,7 +30,7 @@ const Comment = () => {
 
         <View
           style={{display: 'flex', flexDirection: 'column', marginLeft: 20}}>
-          <Text style={{fontWeight: 'bold', fontSize: 17}}>Kimani </Text>
+          <Text style={{fontWeight: 'bold', fontSize: 17}}>{props.name} </Text>
           <View
             style={{
               alignItems: 'center',
@@ -41,15 +43,12 @@ const Comment = () => {
               color="grey"
               style={{backgroundColor: 'transparent'}}
             />
-            <Text style={{color: 'grey', fontSize: 12}}>9 hours ago</Text>
+            <Text style={{color: 'grey', fontSize: 12}}>{props.date}</Text>
           </View>
         </View>
       </View>
       <Text style={{paddingHorizontal: 10, marginBottom: 10}}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quia a
-        quos Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-        quia a quos Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Quisquam quia a quos
+        {props.text}
       </Text>
       <View
         style={{

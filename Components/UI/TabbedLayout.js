@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import { primaryColor } from './AppBar';
 import ArticleItem from './ArticleItem';
 import { articles } from './data';
-import { Button } from 'react-native-paper';
+import { Button, Card } from 'react-native-paper';
 
 const TabbedLayout = ({navigation}) => {
   const [activeTab, setActiveTab] = useState('All');
@@ -13,7 +13,7 @@ const TabbedLayout = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <Card  style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:"#f9f9f9", borderRadius:20, marginHorizontal:15, marginBottom:20, paddingBottom:10}}>
       <Text
         style={{
           marginTop: 10,
@@ -21,12 +21,13 @@ const TabbedLayout = ({navigation}) => {
           fontWeight: 'bold',
           color: 'black',
           fontSize: 15,
+          textAlign: 'center',
         }}>
         Pick category to access the articles
       </Text>
-<Button  onPress={() => navigation.navigate('Second')}>
+{/* <Button  onPress={() => navigation.navigate('Second')}>
   Go next screen
-</Button>
+</Button> */}
       <View
         style={{
           flexDirection: 'row',
@@ -102,7 +103,7 @@ const TabbedLayout = ({navigation}) => {
           <Text>Content for Tab 3</Text>
         </View>
       )}
-    </View>
+    </Card>
   );
 };
 
