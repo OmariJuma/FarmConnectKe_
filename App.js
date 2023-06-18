@@ -8,13 +8,16 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AppBar, {primaryColor} from './Components/UI/AppBar';
 import Home from './Components/Pages/Home';
 import Second from './Components/Pages/Second';
+import CustomerCare from './Components/Pages/CustomerCare';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 function App() {
   // const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const homeName = 'Home';
   const secondName = 'Second';
+  const customerCare = 'Customer Care';
 
   return (
     <PaperProvider>
@@ -29,7 +32,12 @@ function App() {
               tabBarActiveTintColor: primaryColor,
               tabBarInactiveTintColor: 'grey',
               tabBarLabelStyle: {paddingBottom: 10, fontSize: 10},
-              tabBarStyle: {padding: 10, height: 60, borderTopColor:primaryColor, borderTopWidth:1},
+              tabBarStyle: {
+                padding: 10,
+                height: 60,
+                borderTopColor: primaryColor,
+                borderTopWidth: 1,
+              },
               tabBarIcon: ({focused, color, size}) => {
                 let iconName;
                 let rn = route.name;
@@ -40,10 +48,20 @@ function App() {
                   iconName = focused ? 'list' : 'list-outline';
                 }
                 //returning an icon component
+                else if (rn == customerCare) {
+                  return (
+                    <AntDesign
+                      name={'customerservice'}
+                      size={size}
+                      color={color}
+                    />
+                  );
+                }
                 return <Ionicons name={iconName} size={size} color={color} />;
               },
             })}>
             <Tab.Screen name={homeName} component={Home} />
+            <Tab.Screen name={customerCare} component={CustomerCare} />
             <Tab.Screen name={secondName} component={Second} />
           </Tab.Navigator>
         </SafeAreaView>
