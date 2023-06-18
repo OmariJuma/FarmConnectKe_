@@ -14,7 +14,7 @@ const Second = ({navigation, route}) => {
   }
   console.log(route);
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor:"white"}}>
       {id && (
         <View style={styles.container}>
           <Text style={styles.title}>{articles[id - 1].title}</Text>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    textAlign: 'left',
+    textAlign: 'justify',
     marginTop: 10,
     marginBottom: 10,
     letterSpacing: 1,

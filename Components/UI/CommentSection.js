@@ -1,17 +1,19 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Text} from 'react-native-paper';
+import {View, Image} from 'react-native';
+import {Card, Text} from 'react-native-paper';
+import Comment from './Comment';
 const CommentSection = () => {
   return (
-    <View>
+    <View style={{padding:10, elevation:1}}>
       <Text
         style={{
           fontSize: 16,
           fontWeight: 'bold',
-        marginTop:30
+          marginTop: 30,
         }}>
-        Comment Section
+        Comments (20)
       </Text>
+      <Comment />
     </View>
   );
 };
