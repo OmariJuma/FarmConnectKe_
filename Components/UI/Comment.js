@@ -4,17 +4,17 @@ import {Card, Avatar} from 'react-native-paper';
 import LikeBtn from './LikeBtn';
 import CommentBtn from './CommentBtn';
 import ShareBtn from './ShareBtn';
-import { primaryColor, primaryColorVariant } from './AppBar';
+import {primaryColor, primaryColorVariant} from './AppBar';
 
-const Comment = (props) => {
+const Comment = props => {
   //   const [comment, setComment] = useState('');
   return (
     <Card
       style={{
         marginTop: 20,
         backgroundColor: 'white',
-        shadowColor:"black",
-}}>
+        shadowColor: 'black',
+      }}>
       <View
         style={{
           flex: 1,
@@ -59,9 +59,9 @@ const Comment = (props) => {
           paddingLeft: 10,
           paddingBottom: 10,
         }}>
-        <LikeBtn />
+        <LikeBtn likes={1} isArticle={false}/>
         <CommentBtn />
-        <ShareBtn/>
+        <ShareBtn />
       </View>
     </Card>
   );

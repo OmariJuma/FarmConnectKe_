@@ -6,6 +6,9 @@ import ArticleInfo from '../UI/ArticleInfo';
 import LikeCommentShare from '../UI/LikeCommentShare';
 import Input from '../UI/Input';
 import CommentSection from '../UI/CommentSection';
+import LikeBtn from '../UI/LikeBtn';
+import CommentBtn from '../UI/CommentBtn';
+import ShareBtn from '../UI/ShareBtn';
 const Second = ({navigation, route}) => {
   var id;
 
@@ -33,7 +36,18 @@ const Second = ({navigation, route}) => {
             Image source: {articles[id - 1].imageUrl}
           </Text>
           <Text style={styles.text}>{articles[id - 1].text}</Text>
-          <LikeCommentShare/>
+          {/* <LikeCommentShare/> */}
+          <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 20,
+      }}>
+        <LikeBtn likes={articles[id - 1].likes} isArticle={true}/>
+        <CommentBtn/>
+        <ShareBtn/>
+</View>
           <Input/>
           <CommentSection id={id}/>
         </View>

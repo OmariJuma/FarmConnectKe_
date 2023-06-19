@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import { primaryColorVariant } from './AppBar';
-const LikeBtn = () => {
-    const [like, setLike] = useState(false);
-    let [count, setCount] = useState(0);
-  
+import {primaryColorVariant} from './AppBar';
+const LikeBtn = props => {
+  const [like, setLike] = useState(false);
+  let [count, setCount] = useState(props.likes);
+  console.log(props.likes);
+  const [isArticle, setIsArticle] = useState(props.isArticle);
+
   return (
     <TouchableOpacity
       style={{
@@ -26,13 +28,31 @@ const LikeBtn = () => {
           }
         });
       }}>
-      <Avatar.Icon
-        color={like?"red" : primaryColorVariant}
-        icon={like ? 'heart' : 'heart-outline'}
-        size={40}
-        style={{backgroundColor: 'transparent'}}
-      />
-      <Text style={{color: like ? 'red' : primaryColorVariant}}>{count}</Text>
+      {isArticle ? (
+        <>
+          <Avatar.Icon
+            color={like ? 'red' : primaryColorVariant}
+            icon={like ? 'heart' : 'heart-outline'}
+            size={40}
+            style={{backgroundColor: 'transparent'}}
+          />
+          <Text style={{color: like ? 'red' : primaryColorVariant}}>
+            {count}
+          </Text>
+        </>
+      ) : (
+        <>
+          <Avatar.Icon
+            color={like ? 'red' : primaryColorVariant}
+            icon={like ? 'heart' : 'heart-outline'}
+            size={40}
+            style={{backgroundColor: 'transparent'}}
+          />
+          <Text style={{color: like ? 'red' : primaryColorVariant}}>
+            {count}
+          </Text>
+        </>
+      )}
     </TouchableOpacity>
   );
 };
