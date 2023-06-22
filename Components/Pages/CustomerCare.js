@@ -1,11 +1,38 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-const CustomerCare = () => {
+import React, {useEffect, useState, useCallback} from 'react';
+import { GiftedChat } from 'react-native-gifted-chat'
+
+const CustomerCare=()=> {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ])
+  }, [])
+
+  const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
+
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>CustomerCare!</Text>
-    </View>
-  );
-};
+    <GiftedChat
+      messages={messages}
+      onSend={messages => onSend(messages)}
+      user={{
+        _id: 1,
+      }}
+      // renderAvatar={null} 
+    />
+  )
+}
 
 export default CustomerCare;
