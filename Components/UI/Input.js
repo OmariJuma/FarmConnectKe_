@@ -3,15 +3,16 @@ import {TouchableOpacity, View} from 'react-native';
 import {TextInput, Button, Avatar} from 'react-native-paper';
 import paperIcon from './paperIcon.png';
 import {primaryColor} from './AppBar';
+import {articles} from './data';
 
-const Input = () => {
-  const [newComment, setNewComment] = useState('');
+const Input = props => {
+  const [newComment, setNewComment] = useState({});
   const [isValid, setIsValid] = useState(true);
 
   const submitHandler = () => {
-    if (newComment.trim().length > 0) {
+    if (newComment.comment.trim().length > 0) {
       setIsValid(true);
-      console.log(newComment);
+      articles[props.id].comments.push(newComment);
       setNewComment('');
     } else {
       setIsValid(false);
@@ -35,7 +36,11 @@ const Input = () => {
         value={newComment}
         onChange={e => {
           setIsValid(true);
-          setNewComment(e.nativeEvent.text);
+          setNewComment({
+            name: 'Omar',
+            date: '19/6/2023',
+            comment: e.nativeEvent.text,
+          });
         }}
         style={{
           backgroundColor: '#f2f8f9',

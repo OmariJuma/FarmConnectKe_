@@ -7,7 +7,7 @@ const CommentSection = (props) => {
   console.log(props.id);
   const render=()=>{
     if(props.id){
-      return articles[props.id].comments.map((comment,index)=>{
+      return props.comments.map((comment,index)=>{
         return <Comment key={index} text={comment.comment} name={comment.name} date={comment.date}/>
       })
       

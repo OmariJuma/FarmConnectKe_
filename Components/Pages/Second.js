@@ -11,13 +11,14 @@ import CommentBtn from '../UI/CommentBtn';
 import ShareBtn from '../UI/ShareBtn';
 const Second = ({navigation, route}) => {
   var id;
-
   if (route.params) {
     id = route.params.articleId;
   }
+  // const [comments, setComments] = React.useState(articles[id - 1].comments);
+  
   console.log(route);
   return (
-    <ScrollView style={{backgroundColor:"white"}}>
+    <ScrollView style={{backgroundColor: 'white'}}>
       {id && (
         <View style={styles.container}>
           <Text style={styles.title}>{articles[id - 1].title}</Text>
@@ -38,18 +39,18 @@ const Second = ({navigation, route}) => {
           <Text style={styles.text}>{articles[id - 1].text}</Text>
           {/* <LikeCommentShare/> */}
           <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 20,
-      }}>
-        <LikeBtn likes={articles[id - 1].likes} isArticle={true}/>
-        <CommentBtn/>
-        <ShareBtn/>
-</View>
-          <Input/>
-          <CommentSection id={id}/>
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 20,
+            }}>
+            <LikeBtn likes={articles[id - 1].likes} isArticle={true} />
+            {/* <CommentBtn /> */}
+            <ShareBtn />
+          </View>
+          <Input id={id}/>
+          <CommentSection id={id} comments={comments}/>
         </View>
       )}
       {!id && <Text>Nothing</Text>}
