@@ -3,23 +3,30 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TextInput,
+  // TextInput,
   Image,
   SafeAreaView,
   TouchableOpacity,
   StatusBar,
   Alert,
+  ScrollView,
 } from 'react-native';
+import {TextInput} from 'react-native-paper';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase';
-const backImage = require('../../assets/fashion.jpg');
+import {primaryColor, primaryColorVariant} from '../UI/AppBar';
+const backImage = require('../../assets/signup.png');
 
 export default function Signup({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [secondName, setSecondName] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [isText, setIsText] = useState(false);
 
   const onHandleSignup = () => {
+    console.log(email, password, firstName, secondName, phoneNo);
     if (email !== '' && password !== '') {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => console.log('Signup success'))
@@ -28,30 +35,64 @@ export default function Signup({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image source={backImage} style={styles.backImage} />
       <View style={styles.whiteSheet} />
       <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.title}>Create an Account today</Text>
         <TextInput
-          style={styles.input}
+          mode="outlined"
+          label="Enter First Name"
+          placeholder="eg. John"
+          style={{marginBottom: 20}}
+          onChangeText={text => setFirstName(text)}
+        />
+        <TextInput
+          mode="outlined"
+          label="Enter Second Name"
+          placeholder="eg. Doe"
+          style={{marginBottom: 20}}
+          onChangeText={text => setSecondName(text)}
+        />
+        <TextInput
+          mode="outlined"
+          label="Enter phone number"
+          placeholder="eg. 07xxxxxxxx"
+          textContentType="telephoneNumber"
+          style={{marginBottom: 20}}
+          onChangeText={text => setPhoneNo(text)}
+        />
+        <TextInput
+          mode="outlined"
+          // style={styles.input}
           placeholder="Enter email"
           autoCapitalize="none"
           keyboardType="email-address"
           textContentType="emailAddress"
-          autoFocus={true}
+          label={'Email'}
           value={email}
           onChangeText={text => setEmail(text)}
+          style={{marginBottom: 20}}
         />
         <TextInput
-          style={styles.input}
+          // style={styles.input}
+          mode="outlined"
           placeholder="Enter password"
+          label={'Password'}
           autoCapitalize="none"
           autoCorrect={false}
-          secureTextEntry={true}
-          textContentType="password"
+          secureTextEntry={isText ? false : true}
+          textContentType={isText ? 'name' : 'password'}
           value={password}
+          right={
+            isText ? (
+              <TextInput.Icon iconColor={primaryColorVariant} icon="eye-off" onPress={()=>setIsText(!isText)} />
+            ) : (
+              <TextInput.Icon icon="eye" onPress={()=>setIsText(!isText)} />
+            )
+          }
           onChangeText={text => setPassword(text)}
+          style={{marginBottom: 20}}
         />
         <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
           <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
@@ -67,18 +108,24 @@ export default function Signup({navigation}) {
             alignSelf: 'center',
           }}>
           <Text style={{color: 'gray', fontWeight: '600', fontSize: 14}}>
-            Don't have an account?{' '}
+            Do you have an account?{' '}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={{color: '#f57c00', fontWeight: '600', fontSize: 14}}>
+            <Text
+              style={{
+                color: primaryColorVariant,
+                fontWeight: '600',
+                fontSize: 14,
+                textDecorationLine: 'underline',
+              }}>
               {' '}
-              Log In
+              Click here to log in
             </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
       <StatusBar barStyle="light-content" />
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -89,9 +136,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: 'orange',
+    color: primaryColorVariant,
     alignSelf: 'center',
-    paddingBottom: 24,
+    marginBottom: 10,
   },
   input: {
     backgroundColor: '#F6F7FB',
@@ -102,27 +149,23 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   backImage: {
-    width: '100%',
-    height: 340,
-    position: 'absolute',
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
     top: 0,
     resizeMode: 'cover',
   },
   whiteSheet: {
     width: '100%',
-    height: '75%',
-    position: 'absolute',
-    bottom: 0,
     backgroundColor: '#fff',
-    borderTopLeftRadius: 60,
   },
   form: {
     flex: 1,
-    justifyContent: 'center',
+    marginTop: 20,
     marginHorizontal: 30,
   },
   button: {
-    backgroundColor: '#f57c00',
+    backgroundColor: primaryColor,
     height: 58,
     borderRadius: 10,
     justifyContent: 'center',

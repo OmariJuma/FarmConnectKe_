@@ -4,64 +4,87 @@ import {
   Text,
   View,
   Button,
-  TextInput,
   Image,
   SafeAreaView,
   TouchableOpacity,
   StatusBar,
   Alert,
+  ScrollView,
 } from 'react-native';
+import {TextInput} from 'react-native-paper';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase';
-import {AuthenticatedUserProvider, AuthenticatedUserContext} from "../../Store/Provider"
+import {
+  AuthenticatedUserProvider,
+  AuthenticatedUserContext,
+} from '../../Store/Provider';
+import {primaryColor, primaryColorVariant} from '../UI/AppBar';
 
-const backImage = require('../../assets/fashion.jpg');
+const backImage = require('../../assets/login.png');
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-    const {setUser} = useContext(AuthenticatedUserContext);
+  const [isText, setIsText] = useState(false);
+
+  const {setUser} = useContext(AuthenticatedUserContext);
   const onHandleLogin = () => {
     if (email !== '' && password !== '') {
       signInWithEmailAndPassword(auth, email, password)
-        .then((res) => {
+        .then(res => {
           console.log('Login success');
           console.log(res._tokenResponse.email);
-        //   console.log(res);
+          //   console.log(res);
 
           setUser(res._tokenResponse.email);
-        // console.log(user)
-          navigation.replace("Chat");
+          // console.log(user)
+          navigation.replace('Chat');
         })
         .catch(err => Alert.alert('Login error', err.message));
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image source={backImage} style={styles.backImage} />
       <View style={styles.whiteSheet} />
       <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Log In</Text>
+        <Text style={styles.title}>Log In To Continue</Text>
         <TextInput
-          style={styles.input}
+          mode="outlined"
+          // style={styles.input}
           placeholder="Enter email"
           autoCapitalize="none"
           keyboardType="email-address"
           textContentType="emailAddress"
-          // autoFocus={true}
+          label={'Email'}
           value={email}
           onChangeText={text => setEmail(text)}
+          style={{marginBottom: 20}}
         />
         <TextInput
-          style={styles.input}
+          // style={styles.input}
+          mode="outlined"
           placeholder="Enter password"
+          label={'Password'}
           autoCapitalize="none"
           autoCorrect={false}
-          secureTextEntry={true}
-          textContentType="password"
+          secureTextEntry={isText ? false : true}
+          textContentType={isText ? 'name' : 'password'}
           value={password}
+          right={
+            isText ? (
+              <TextInput.Icon
+                iconColor={primaryColorVariant}
+                icon="eye-off"
+                onPress={() => setIsText(!isText)}
+              />
+            ) : (
+              <TextInput.Icon icon="eye" onPress={() => setIsText(!isText)} />
+            )
+          }
           onChangeText={text => setPassword(text)}
+          style={{marginBottom: 20}}
         />
         <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
           <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
@@ -80,15 +103,21 @@ export default function Login({navigation}) {
             Don't have an account?{' '}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-            <Text style={{color: '#f57c00', fontWeight: '600', fontSize: 14}}>
+            <Text
+              style={{
+                color: primaryColorVariant,
+                fontWeight: '600',
+                fontSize: 14,
+                textDecorationLine: 'underline',
+              }}>
               {' '}
-              Sign Up
+              Click here to Sign Up
             </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
       <StatusBar barStyle="light-content" />
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -99,7 +128,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: 'orange',
+    color: primaryColorVariant,
     alignSelf: 'center',
     paddingBottom: 24,
   },
@@ -112,27 +141,31 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   backImage: {
-    width: '100%',
-    height: 340,
-    position: 'absolute',
-    top: 0,
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    borderRadius: 100,
+    // position: 'absolute',
+    marginTop: 20,
     resizeMode: 'cover',
   },
   whiteSheet: {
     width: '100%',
-    height: '75%',
-    position: 'absolute',
-    bottom: 0,
-    backgroundColor: '#fff',
+    // height: '80%',
+    // position: 'absolute',
+    // bottom: 0,
+    backgroundColor: '#f9f9f9',
     borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
   },
   form: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    // marginTop:100,
     marginHorizontal: 30,
   },
   button: {
-    backgroundColor: '#f57c00',
+    backgroundColor: primaryColor,
     height: 58,
     borderRadius: 10,
     justifyContent: 'center',
