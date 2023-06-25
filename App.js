@@ -16,6 +16,7 @@ import Home from './Components/Pages/Home';
 import Second from './Components/Pages/Second';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
+import Third from './Components/Pages/Third';
 import CustomerCare from './Components/Pages/CustomerCare';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -35,6 +36,8 @@ export default function App() {
     const unSubscribe = onAuthStateChanged(auth, async authenticatedUser => {
       authenticatedUser ? setUser(authenticatedUser) : setUser(null);
       // setLoading(false);
+      navigation.replace('Home');
+
       return unSubscribe;
     });
   }, [user]);
@@ -55,22 +58,60 @@ export default function App() {
   const secondName = 'Second';
   const customerCare = 'Customer Care';
 
+  const NavTabs = () => (
+    <Tab.Navigator
+      // initialRouteName={homeName}
+      screenOptions={({route}) => ({
+        lazy: false,
+        headerShown: false,
+        tabBarActiveTintColor: primaryColor,
+        tabBarInactiveTintColor: 'grey',
+        tabBarLabelStyle: {paddingBottom: 10, fontSize: 10},
+        tabBarStyle: {
+          padding: 10,
+          height: 60,
+          borderTopColor: primaryColor,
+          borderTopWidth: 1,
+        },
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+          let rn = route.name;
+
+          if (rn === homeName) {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (rn === secondName) {
+            iconName = focused ? 'list' : 'list-outline';
+          }
+          //returning an icon component
+          else if (rn == customerCare) {
+            return (
+              <AntDesign name={'customerservice'} size={size} color={color} />
+            );
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}>
+      <Tab.Screen name={homeName} component={Home} />
+      <Tab.Screen name={customerCare} component={CustomerCare} />
+      <Tab.Screen name={secondName} component={Second} />
+    </Tab.Navigator>
+  );
+
   const ChatStack = () => (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       {user ? (
         <>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Chat" component={CustomerCare} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} />
-
+          <Stack.Screen name="Tabs" component={NavTabs} />
+          <Stack.Screen name="test" component={Third}/>
         </>
       ) : (
         <>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Chat" component={CustomerCare} />
+          <Stack.Screen name="Tabs" component={NavTabs} />
+          <Stack.Screen name="test" component={Third}/>
 
         </>
       )}
@@ -82,47 +123,7 @@ export default function App() {
         <SafeAreaView style={styles.container}>
           <AuthenticatedUserProvider>
             <AppBar />
-<ChatStack/>
-            {/* <Tab.Navigator
-              // initialRouteName={homeName}
-              screenOptions={({route}) => ({
-                lazy: false,
-                headerShown: false,
-                tabBarActiveTintColor: primaryColor,
-                tabBarInactiveTintColor: 'grey',
-                tabBarLabelStyle: {paddingBottom: 10, fontSize: 10},
-                tabBarStyle: {
-                  padding: 10,
-                  height: 60,
-                  borderTopColor: primaryColor,
-                  borderTopWidth: 1,
-                },
-                tabBarIcon: ({focused, color, size}) => {
-                  let iconName;
-                  let rn = route.name;
-
-                  if (rn === homeName) {
-                    iconName = focused ? 'home' : 'home-outline';
-                  } else if (rn === secondName) {
-                    iconName = focused ? 'list' : 'list-outline';
-                  }
-                  //returning an icon component
-                  else if (rn == customerCare) {
-                    return (
-                      <AntDesign
-                        name={'customerservice'}
-                        size={size}
-                        color={color}
-                      />
-                    );
-                  }
-                  return <Ionicons name={iconName} size={size} color={color} />;
-                },
-              })}>
-              <Tab.Screen name={homeName} component={Home} />
-              <Tab.Screen name={customerCare} component={CustomerCare} />
-              <Tab.Screen name={secondName} component={Second} />
-            </Tab.Navigator> */}
+            <ChatStack />
           </AuthenticatedUserProvider>
         </SafeAreaView>
       </NavigationContainer>

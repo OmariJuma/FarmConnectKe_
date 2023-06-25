@@ -5,7 +5,7 @@ import CarouselCardItem, {SLIDER_WIDTH, ITEM_WIDTH} from './CarouselCardItem';
 import data from './data';
 import {Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-const CarouselCards = () => {
+const CarouselCards = ({navigation}) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = React.useState(0);
 
@@ -50,7 +50,7 @@ const CarouselCards = () => {
             marginStart: '25%',
             flexDirection: 'row',
             justifyContent: 'center',
-          }}>
+          }} onPress={()=>navigation.navigate("test")}>
           <Text style={{color:"white"}}>See more agents  </Text>
           <Icon size={17} color="white" name="arrow-right" />
         </Button>

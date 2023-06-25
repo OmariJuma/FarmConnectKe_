@@ -6,7 +6,7 @@ import {ScrollView} from 'react-native';
 const Home = ({navigation}) => {
   return (
     <ScrollView style={{backgroundColor: '#fff'}}>
-      <CarouselCards />
+      <CarouselCards navigation={navigation}/>
       <TabbedLayout navigation={navigation} />
     </ScrollView>
   );

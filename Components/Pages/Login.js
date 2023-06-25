@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -27,18 +27,14 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [isText, setIsText] = useState(false);
 
-  const {setUser} = useContext(AuthenticatedUserContext);
-  const onHandleLogin = () => {
+  const {user, setUser} = useContext(AuthenticatedUserContext);
+  const onHandleLogin = async () => {
     if (email !== '' && password !== '') {
-      signInWithEmailAndPassword(auth, email, password)
+      await signInWithEmailAndPassword(auth, email, password)
         .then(res => {
           console.log('Login success');
-          console.log(res._tokenResponse.email);
-          //   console.log(res);
-
           setUser(res._tokenResponse.email);
-          // console.log(user)
-          navigation.replace('Chat');
+          navigation.replace('Tabs');
         })
         .catch(err => Alert.alert('Login error', err.message));
     }
