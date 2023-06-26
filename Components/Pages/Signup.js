@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {auth} from '../../firebase';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';
 const backImage = require('../../assets/signup.png');
@@ -29,7 +29,21 @@ export default function Signup({navigation}) {
     console.log(email, password, firstName, secondName, phoneNo);
     if (email !== '' && password !== '') {
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => console.log('Signup success'))
+        .then(credentials => {
+          console.log('Signup success');
+          console.log(credentials);
+          updateProfile(user, {
+            displayName: firstName + ' ' + secondName,
+            phoneNumber: phoneNo,
+            photoURL: avatar
+              ? avatar
+              : 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
+          });
+        })
+        .then(updatedProfile => {
+          console.log('updated profile response ' + updatedProfile);
+          navigation.navigate('Login');
+        })
         .catch(err => Alert.alert('Login error', err.message));
     }
   };
@@ -86,9 +100,13 @@ export default function Signup({navigation}) {
           value={password}
           right={
             isText ? (
-              <TextInput.Icon iconColor={primaryColorVariant} icon="eye-off" onPress={()=>setIsText(!isText)} />
+              <TextInput.Icon
+                iconColor={primaryColorVariant}
+                icon="eye-off"
+                onPress={() => setIsText(!isText)}
+              />
             ) : (
-              <TextInput.Icon icon="eye" onPress={()=>setIsText(!isText)} />
+              <TextInput.Icon icon="eye" onPress={() => setIsText(!isText)} />
             )
           }
           onChangeText={text => setPassword(text)}

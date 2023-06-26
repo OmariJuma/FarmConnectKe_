@@ -31,29 +31,6 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const {user, setUser} = useContext(AuthenticatedUserContext);
-  // const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, async authenticatedUser => {
-      authenticatedUser ? setUser(authenticatedUser) : setUser(null);
-      // setLoading(false);
-      navigation.replace('Home');
-
-      return unSubscribe;
-    });
-  }, [user]);
-
-  // if (loading) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //       }}>
-  //         <ActivityIndicator size={"large"}/><Text>Loading...</Text>
-  //       </View>
-  //   );
-  // }
   const homeName = 'Home';
   const secondName = 'Second';
   const customerCare = 'Customer Care';
