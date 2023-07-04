@@ -24,14 +24,26 @@ export default function Signup({navigation}) {
   const [secondName, setSecondName] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const [isText, setIsText] = useState(false);
+  const [error, setError] = useState('');
 
   const onHandleSignup = () => {
-    console.log(email, password, firstName, secondName, phoneNo);
-    if (email !== '' && password !== '') {
+    if (
+      firstName.trim().length > 2 &&
+      secondName.trim().length > 2 &&
+      phoneNo.length == 10 &&
+      email.trim().length > 6 &&
+      email.includes(['@' && '.']) &&
+      password.trim().length > 7
+    ) {
+      if (
+        password.trim().toString() == '12345678' ||
+        password.trim().toString() == '1234567890'
+      ) {
+        return setError('Password cannot be ' + password);
+      }
       createUserWithEmailAndPassword(auth, email, password)
         .then(credentials => {
           console.log('Signup success');
-          console.log(credentials);
           updateProfile(user, {
             displayName: firstName + ' ' + secondName,
             phoneNumber: phoneNo,
@@ -45,6 +57,20 @@ export default function Signup({navigation}) {
           navigation.navigate('Login');
         })
         .catch(err => Alert.alert('Login error', err.message));
+    } else if (
+      !email.includes(['@' || '.']) ||
+      password.trim().length < 7 ||
+      firstName.trim().length < 2 ||
+      secondName.trim().length < 2 ||
+      phoneNo.trim().length < 10
+    ) {
+      setError(
+        'Please enter: \nTip 1: A valid email address and password which is not 12345678 or 1234567890 \nTip 2: First Name and Second Name should not be empty or less than three characters\nTip 3: Phone number should be ten digits e.g 07XXXXXXXX or 011XXXXXXX',
+      );
+    } else {
+      setError(
+        'Please fill in all the fields correctly.\nTip 1: make sure your email has an @\nTip 2: The password should be greater than 7 characters',
+      );
     }
   };
 
@@ -112,6 +138,20 @@ export default function Signup({navigation}) {
           onChangeText={text => setPassword(text)}
           style={{marginBottom: 20}}
         />
+        {error && (
+          <Text
+            style={{
+              backgroundColor: '#ffdcdf',
+              textAlign: 'left',
+              paddingVertical: 10,
+              paddingLeft: 10,
+              borderColor: 'red',
+              color: 'red',
+            }}>
+            {error}
+          </Text>
+        )}
+
         <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
           <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
             {' '}

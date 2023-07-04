@@ -26,17 +26,27 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isText, setIsText] = useState(false);
+  const [error, setError] = useState('');
 
   const {user, setUser} = useContext(AuthenticatedUserContext);
   const onHandleLogin = async () => {
-    if (email !== '' && password !== '') {
+    if (
+      email.trim().length > 6 &&
+      email.includes(['@' && '.']) &&
+      password.trim().length > 7
+    ) {
       await signInWithEmailAndPassword(auth, email, password)
         .then(res => {
           console.log('Login success');
           setUser(res._tokenResponse.email);
           navigation.replace('Tabs');
+          setError("");
         })
         .catch(err => Alert.alert('Login error', err.message));
+    } else if (!email.includes(['@' || '.'])) {
+      setError('Please enter a valid email address and password');
+    } else {
+      setError('Please fill in all the fields correctly.\nTip 1: make sure your email has an @\nTip 2: The password should be greater than 7 characters');
     }
   };
 
@@ -82,6 +92,20 @@ export default function Login({navigation}) {
           onChangeText={text => setPassword(text)}
           style={{marginBottom: 20}}
         />
+        {error && (
+          <Text
+            style={{
+              backgroundColor: '#ffdcdf',
+              textAlign: 'left',
+              paddingVertical: 10,
+              paddingLeft:10,
+              borderColor: 'red',
+              color: 'red',
+            }}>
+            {error}
+          </Text>
+        )}
+
         <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
           <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
             {' '}

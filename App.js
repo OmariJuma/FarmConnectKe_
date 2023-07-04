@@ -111,7 +111,7 @@ export default function App() {
           <NavigationContainer>
             <SafeAreaView style={styles.container}>
               <AuthenticatedUserProvider>
-                <AppBar />
+              <AppBar />
                 <ChatStack />
               </AuthenticatedUserProvider>
             </SafeAreaView>
