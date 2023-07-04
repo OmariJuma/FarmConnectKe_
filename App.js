@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import {ActivityIndicator, PaperProvider, Text} from 'react-native-paper';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -26,6 +26,7 @@ import {
   AuthenticatedUserProvider,
   AuthenticatedUserContext,
 } from './Store/Provider';
+import Logo from "./assets/farmConnect.png"
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -34,6 +35,15 @@ export default function App() {
   const homeName = 'Home';
   const secondName = 'Second';
   const customerCare = 'Customer Care';
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
 
   const NavTabs = () => (
     <Tab.Navigator
@@ -81,30 +91,34 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Chat" component={CustomerCare} />
           <Stack.Screen name="Tabs" component={NavTabs} />
-          <Stack.Screen name="test" component={Third}/>
+          <Stack.Screen name="test" component={Third} />
         </>
       ) : (
         <>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="Tabs" component={NavTabs} />
-          <Stack.Screen name="test" component={Third}/>
-
+          <Stack.Screen name="test" component={Third} />
         </>
       )}
     </Stack.Navigator>
   );
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <SafeAreaView style={styles.container}>
-          <AuthenticatedUserProvider>
-            <AppBar />
-            <ChatStack />
-          </AuthenticatedUserProvider>
-        </SafeAreaView>
-      </NavigationContainer>
-    </PaperProvider>
+    <>
+      {isLoading && <Image source={Logo} style={{display:"flex", alignSelf:"center",marginVertical:"50%"}}/>}
+      {!isLoading && (
+        <PaperProvider>
+          <NavigationContainer>
+            <SafeAreaView style={styles.container}>
+              <AuthenticatedUserProvider>
+                <AppBar />
+                <ChatStack />
+              </AuthenticatedUserProvider>
+            </SafeAreaView>
+          </NavigationContainer>
+        </PaperProvider>
+      )}
+    </>
   );
 }
 
