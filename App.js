@@ -11,7 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import AppBar, {primaryColor} from './Components/UI/AppBar';
+import {primaryColor} from './Components/UI/AppBar';
 import Home from './Components/Pages/Home';
 import Second from './Components/Pages/Second';
 import Login from './Components/Pages/Login';
@@ -26,7 +26,7 @@ import {
   AuthenticatedUserProvider,
   AuthenticatedUserContext,
 } from './Store/Provider';
-import Logo from "./assets/farmConnect.png"
+import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
 
 export default function App() {
@@ -87,35 +87,40 @@ export default function App() {
 
   const ChatStack = () => (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      {user ? (
-        <>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Chat" component={CustomerCare} />
-          <Stack.Screen name="Tabs" component={NavTabs} />
-          <Stack.Screen name="test" component={Third} />
-          <Stack.Screen name="allArticles" component={AllArticles} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen name="Tabs" component={NavTabs} />
-          <Stack.Screen name="test" component={Third} />
-          <Stack.Screen name="allArticles" component={AllArticles} />
-
-        </>
-      )}
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Tabs" component={NavTabs} />
+      <Stack.Screen
+        name="AllArticles"
+        component={AllArticles}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: primaryColor,
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerTitleAlign: 'center',
+          headerTitle: 'All Articles',
+        }}
+      />
     </Stack.Navigator>
   );
   return (
     <>
-      {isLoading && <Image source={Logo} style={{display:"flex", alignSelf:"center",marginVertical:"50%"}}/>}
+      {isLoading && (
+        <Image
+          source={Logo}
+          style={{display: 'flex', alignSelf: 'center', marginVertical: '50%'}}
+        />
+      )}
       {!isLoading && (
         <PaperProvider>
           <NavigationContainer>
             <SafeAreaView style={styles.container}>
               <AuthenticatedUserProvider>
-              <AppBar />
                 <ChatStack />
               </AuthenticatedUserProvider>
             </SafeAreaView>
@@ -129,7 +134,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     justifyContent: 'center',
   },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import CarouselCardItem, {SLIDER_WIDTH, ITEM_WIDTH} from './CarouselCardItem';
 import data from './data';
@@ -10,7 +10,7 @@ const CarouselCards = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Carousel
         layout="default"
         autoplay
@@ -50,7 +50,7 @@ const CarouselCards = ({navigation}) => {
             marginStart: '25%',
             flexDirection: 'row',
             justifyContent: 'center',
-          }} onPress={()=>navigation.navigate("test")}>
+          }}>
           <Text style={{color:"white"}}>See more agents  </Text>
           <Icon size={17} color="white" name="arrow-right" />
         </Button>
@@ -58,5 +58,11 @@ const CarouselCards = ({navigation}) => {
     </View>
   );
 };
+const styles= StyleSheet.create({
+  container:{
+    backgroundColor: '#f9f9f9',
+
+  }
+})
 
 export default CarouselCards;

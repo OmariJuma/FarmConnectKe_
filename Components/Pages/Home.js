@@ -2,11 +2,14 @@ import * as React from 'react';
 import CarouselCards from '../UI/CarouselCards';
 import TabbedLayout from '../UI/TabbedLayout';
 import {ScrollView} from 'react-native';
+import AppBar from '../UI/AppBar';
 
 const Home = ({navigation}) => {
   return (
     <ScrollView style={{backgroundColor: '#fff'}}>
-      <CarouselCards navigation={navigation}/>
+      <AppBar />
+
+      <CarouselCards navigation={navigation} />
       <TabbedLayout navigation={navigation} />
     </ScrollView>
   );
