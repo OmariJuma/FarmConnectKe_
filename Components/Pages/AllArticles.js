@@ -1,22 +1,33 @@
-import {Text} from 'react-native-paper';
+import React, {useState} from "react";
+import {Button, Text} from 'react-native-paper';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {articles} from '../UI/data';
 import ArticleItem from '../UI/ArticleItem';
+import { primaryColorVariant } from '../UI/AppBar';
 
 const AllArticles = ({navigation}) => {
-  const uniqueCategories = [
-    ...new Set(articles.map(article => article.category))];
-  console.log(uniqueCategories.sort());
+    const [activeCategory, setActiveCategory] = useState("All")
+  var uniqueCategories = new Set();
+  uniqueCategories.add("All");
+   articles.forEach(category =>
+    uniqueCategories.add(category.category)
+  );
+  console.log(uniqueCategories);
   return (
     <>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.container}>
-        {uniqueCategories}
+        {[...uniqueCategories].map((category) => (
+
+          <Button onPress={()=>setActiveCategory(category)} key={category} style={[styles.item, {backgroundColor: activeCategory==category? "orange":"lightgreen"}]}>
+            <Text>{category}</Text>
+          </Button>
+        ))}
       </ScrollView>
-      <ScrollView>
-        {articles.map(article => (
+      <ScrollView style={{backgroundColor:"#fff"}}>
+        {articles.filter(article =>activeCategory==="All"||article.category===activeCategory).map(article => (
           <ArticleItem
             key={article.id}
             id={article.id}
@@ -36,7 +47,6 @@ const AllArticles = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    //   flexDirection: 'row',
     paddingVertical: 20,
     height: 100,
   },
@@ -45,7 +55,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 10,
-    backgroundColor: 'lightgray',
     borderRadius: 10,
     paddingHorizontal: 10,
   },
