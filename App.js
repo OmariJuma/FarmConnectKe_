@@ -27,6 +27,7 @@ import {
   AuthenticatedUserContext,
 } from './Store/Provider';
 import Logo from "./assets/farmConnect.png"
+import AllArticles from './Components/Pages/AllArticles';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -92,6 +93,7 @@ export default function App() {
           <Stack.Screen name="Chat" component={CustomerCare} />
           <Stack.Screen name="Tabs" component={NavTabs} />
           <Stack.Screen name="test" component={Third} />
+          <Stack.Screen name="allArticles" component={AllArticles} />
         </>
       ) : (
         <>
@@ -99,6 +101,8 @@ export default function App() {
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="Tabs" component={NavTabs} />
           <Stack.Screen name="test" component={Third} />
+          <Stack.Screen name="allArticles" component={AllArticles} />
+
         </>
       )}
     </Stack.Navigator>
