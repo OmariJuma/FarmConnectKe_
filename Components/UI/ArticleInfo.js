@@ -1,5 +1,6 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Avatar, Text} from 'react-native-paper';
+import { primaryColorVariant } from './AppBar';
 
 const ArticleInfo = props => {
   return (
@@ -8,7 +9,7 @@ const ArticleInfo = props => {
         <Avatar.Icon
           icon="account-circle"
           size={props.size}
-          color="grey"
+          color={primaryColorVariant}
           style={{backgroundColor: 'white'}}
         />
         <Text style={styles.adtnlText}>Author: {props.author}</Text>
@@ -17,18 +18,28 @@ const ArticleInfo = props => {
         <Avatar.Icon
           icon="clock"
           size={props.size}
-          color="grey"
+          color={primaryColorVariant}
           style={{backgroundColor: 'white'}}
         />
         <Text style={styles.adtnlText}>Posted: {props.date}</Text>
       </View>
+      <TouchableOpacity style={styles.miniContainer}>
+        <Avatar.Icon
+          icon="bookmark-plus"
+          size={props.size}
+          color={primaryColorVariant}
+          style={{backgroundColor: 'white'}}
+        />
+        <Text style={styles.adtnlText}>Read Later</Text>
+      </TouchableOpacity>
     </>
   );
 };
 const styles = StyleSheet.create({
   adtnlText: {
-    color: 'grey',
+    color:{primaryColorVariant},
     fontSize: 12,
+    fontWeight:"700"
   },
   miniContainer: {
     gap: 10,

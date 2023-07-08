@@ -3,7 +3,6 @@ import {Button, Text} from 'react-native-paper';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {articles} from '../UI/data';
 import ArticleItem from '../UI/ArticleItem';
-import { primaryColorVariant } from '../UI/AppBar';
 
 const AllArticles = ({navigation}) => {
     const [activeCategory, setActiveCategory] = useState("All")

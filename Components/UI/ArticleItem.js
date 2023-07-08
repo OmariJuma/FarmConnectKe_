@@ -6,10 +6,9 @@ import ArticleInfo from './ArticleInfo';
 
 const ArticleItem = (props, {nav}) => {
   const handlePress = () => {
-    props.nav.navigate('Second', {
+    props.nav.navigate('Read Article', {
       articleId: props.id,
     });
-    console.log(props.id);
   };
 
   return (

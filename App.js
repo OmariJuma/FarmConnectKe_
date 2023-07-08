@@ -13,10 +13,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {primaryColor} from './Components/UI/AppBar';
 import Home from './Components/Pages/Home';
-import Second from './Components/Pages/Second';
+import ReadArticle from './Components/Pages/ReadArticle';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
-import Third from './Components/Pages/Third';
+import Bookmark from './Components/Pages/Bookmark';
 import CustomerCare from './Components/Pages/CustomerCare';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -34,8 +34,9 @@ export default function App() {
   const Tab = createBottomTabNavigator();
   const {user, setUser} = useContext(AuthenticatedUserContext);
   const homeName = 'Home';
-  const secondName = 'Second';
+  const ReadArticleName = 'Read Article';
   const customerCare = 'Customer Care';
+  const BookmarkName = 'Bookmark';
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -67,8 +68,8 @@ export default function App() {
 
           if (rn === homeName) {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (rn === secondName) {
-            iconName = focused ? 'list' : 'list-outline';
+          } else if (rn === BookmarkName) {
+            iconName = focused ? 'bookmark' : 'bookmark-outline';
           }
           //returning an icon component
           else if (rn == customerCare) {
@@ -81,15 +82,47 @@ export default function App() {
       })}>
       <Tab.Screen name={homeName} component={Home} />
       <Tab.Screen name={customerCare} component={CustomerCare} />
-      <Tab.Screen name={secondName} component={Second} />
+      <Tab.Screen
+        name={BookmarkName}
+        component={Bookmark}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: primaryColor,
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerTitleAlign: 'center',
+          headerTitle: '',
+        }}
+      />
     </Tab.Navigator>
   );
 
   const ChatStack = () => (
-    <Stack.Navigator screenOptions={{headerShown: false, animation:"slide_from_right"}}>
+    <Stack.Navigator
+      screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Tabs" component={NavTabs} />
+      <Stack.Screen
+        name={ReadArticleName}
+        component={ReadArticle}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: primaryColor,
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerTitleAlign: 'center',
+          headerTitle:" ",
+        }}
+      />
       <Stack.Screen
         name="AllArticles"
         component={AllArticles}

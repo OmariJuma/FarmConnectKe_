@@ -9,7 +9,7 @@ import CommentSection from '../UI/CommentSection';
 import LikeBtn from '../UI/LikeBtn';
 import CommentBtn from '../UI/CommentBtn';
 import ShareBtn from '../UI/ShareBtn';
-const Second = ({navigation, route}) => {
+const ReadArticle = ({navigation, route}) => {
   var id = 1;
   if (route.params) {
     id = route.params.articleId;
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Second;
+export default ReadArticle;
