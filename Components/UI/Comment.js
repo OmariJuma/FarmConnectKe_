@@ -60,7 +60,7 @@ const Comment = props => {
           paddingBottom: 10,
         }}>
         <LikeBtn likes={1} isArticle={false}/>
-        <CommentBtn />
+        {/* <CommentBtn /> */}
         <ShareBtn />
       </View>
     </Card>

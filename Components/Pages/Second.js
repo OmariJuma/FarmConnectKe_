@@ -10,13 +10,11 @@ import LikeBtn from '../UI/LikeBtn';
 import CommentBtn from '../UI/CommentBtn';
 import ShareBtn from '../UI/ShareBtn';
 const Second = ({navigation, route}) => {
-  var id;
+  var id = 1;
   if (route.params) {
     id = route.params.articleId;
   }
-  // const [comments, setComments] = React.useState(articles[id - 1].comments);
-  
-  console.log(route);
+  const [comments, setComments] = React.useState(articles[id-1].comments);
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       {id && (
@@ -49,8 +47,8 @@ const Second = ({navigation, route}) => {
             {/* <CommentBtn /> */}
             <ShareBtn />
           </View>
-          <Input id={id}/>
-          <CommentSection id={id} comments={comments}/>
+          <Input id={id} />
+          <CommentSection id={id} comments={comments} />
         </View>
       )}
       {!id && <Text>Nothing</Text>}
