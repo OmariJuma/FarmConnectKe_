@@ -1,3 +1,5 @@
+import { ref, onValue, set } from "firebase/database"; 
+import {database} from "../../firebase"
 const data = [
   {
     body: 'Dave is ',
@@ -199,3 +201,16 @@ export const articles = [
   },
 ];
 export default data;
+
+export async function writedata(id, title, date, author, category, imageUrl, text, likes){
+  set(ref(  database, "Articles/"+id),{
+    id: id,
+    title: title,
+    date: date,
+    author: author, 
+    category: category,
+    imageUrl: imageUrl, 
+    text: text, 
+    likes: likes,
+  }).then(res=>{console.log(res)})
+}

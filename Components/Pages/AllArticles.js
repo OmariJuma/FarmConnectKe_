@@ -11,7 +11,6 @@ const AllArticles = ({navigation}) => {
    articles.forEach(category =>
     uniqueCategories.add(category.category)
   );
-  console.log(uniqueCategories);
   return (
     <>
       <ScrollView

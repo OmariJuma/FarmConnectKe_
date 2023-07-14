@@ -1,14 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import CarouselCardItem, {SLIDER_WIDTH, ITEM_WIDTH} from './CarouselCardItem';
 import data from './data';
 import {Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {onValue, ref} from 'firebase/database';
+import {database} from '../../firebase';
 const CarouselCards = ({navigation}) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = React.useState(0);
+  const [articles, setArticles] = React.useState([]);
 
+  // useEffect(() => {
+    const databaseFetch= ()=>{
+    return onValue(ref(database, '/Articles/'), snapshot =>{
+      if(snapshot.exists()){
+        setArticles(snapshot.val())
+      }
+    })
+    }
+    databaseFetch();
+  // },
+  //   []);
+    console.log(articles.length)
   return (
     <View style={styles.container}>
       <Carousel
@@ -51,18 +66,17 @@ const CarouselCards = ({navigation}) => {
             flexDirection: 'row',
             justifyContent: 'center',
           }}>
-          <Text style={{color:"white"}}>See more agents  </Text>
+          <Text style={{color: 'white'}}>See more agents </Text>
           <Icon size={17} color="white" name="arrow-right" />
         </Button>
       </TouchableOpacity>
     </View>
   );
 };
-const styles= StyleSheet.create({
-  container:{
+const styles = StyleSheet.create({
+  container: {
     backgroundColor: '#f9f9f9',
-
-  }
-})
+  },
+});
 
 export default CarouselCards;
