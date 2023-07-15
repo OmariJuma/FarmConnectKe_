@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {TextInput, Button, Avatar} from 'react-native-paper';
 import paperIcon from './paperIcon.png';
@@ -7,7 +7,10 @@ import {articles} from './data';
 import { ref, update} from 'firebase/database';
 import {database} from '../../firebase';
 import uuid  from 'react-native-uuid';
+import {AuthenticatedUserContext} from '../../Store/Provider';
+
 const Input = props => {
+  const {user} = useContext(AuthenticatedUserContext);
   const [newComment, setNewComment] = useState({});
   const [isValid, setIsValid] = useState(true);
   const addComment=(name, date, comment, articleId)=>{
@@ -48,8 +51,8 @@ const Input = props => {
         onChange={e => {
           setIsValid(true);
           setNewComment({
-            name: 'Kimani',
-            date: '15/7/2023',
+            name: user.displayName,
+            date: new Date(),
             comment: e.nativeEvent.text,
           });
         }}

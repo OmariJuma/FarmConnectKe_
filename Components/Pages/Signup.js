@@ -44,16 +44,16 @@ export default function Signup({navigation}) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(credentials => {
           console.log('Signup success');
-          updateProfile(user, {
+          updateProfile(credentials.user, {
+            firstName: firstName,
+            secondName: secondName,
             displayName: firstName + ' ' + secondName,
             phoneNumber: phoneNo,
-            photoURL: avatar
-              ? avatar
-              : 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
+            photoURL: 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
           });
         })
         .then(updatedProfile => {
-          console.log('updated profile response ' + updatedProfile);
+          console.log(updatedProfile);
           navigation.navigate('Login');
         })
         .catch(err => Alert.alert('Login error', err.message));

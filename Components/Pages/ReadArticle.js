@@ -15,6 +15,9 @@ const ReadArticle = ({navigation, route}) => {
     id = route.params.articleId;
   }
   const [comments, setComments] = React.useState(articles[id-1].comments);
+  // React.useEffect(() => {
+
+  // },[]);
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       {id && (

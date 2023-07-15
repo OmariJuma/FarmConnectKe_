@@ -38,7 +38,14 @@ export default function Login({navigation}) {
       await signInWithEmailAndPassword(auth, email, password)
         .then(res => {
           console.log('Login success');
-          setUser(res._tokenResponse.email);
+          console.log(res._tokenResponse);
+          setUser(
+          {
+            email: res._tokenResponse.email,
+            displayName: res._tokenResponse.displayName,
+            photoURL: res._tokenResponse.photoUrl,
+          }
+          );
           navigation.replace('Tabs');
           setError("");
         })
