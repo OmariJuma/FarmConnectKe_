@@ -1,20 +1,21 @@
-import * as React from 'react';
+import React,{useContext, useState} from 'react';
 import {Button, Text} from 'react-native-paper';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
-import {articles} from '../UI/data';
+// import {articles} from '../UI/data';
 import ArticleInfo from '../UI/ArticleInfo';
-import LikeCommentShare from '../UI/LikeCommentShare';
 import Input from '../UI/Input';
 import CommentSection from '../UI/CommentSection';
 import LikeBtn from '../UI/LikeBtn';
-import CommentBtn from '../UI/CommentBtn';
 import ShareBtn from '../UI/ShareBtn';
+import { AuthenticatedUserContext } from '../../Store/Provider';
 const ReadArticle = ({navigation, route}) => {
+  const {articles} = useContext(AuthenticatedUserContext);
   var id = 1;
   if (route.params) {
     id = route.params.articleId;
   }
-  const [comments, setComments] = React.useState(articles[id-1].comments);
+  // console.log(articles[id-1].comments);
+  const [comments, setComments] = React.useState(Object.values(articles[id-1].comments));
   // React.useEffect(() => {
 
   // },[]);
@@ -46,7 +47,7 @@ const ReadArticle = ({navigation, route}) => {
               alignItems: 'center',
               gap: 20,
             }}>
-            <LikeBtn likes={articles[id - 1].likes} isArticle={true} />
+            <LikeBtn likes={route.params.likes} isArticle={true} />
             {/* <CommentBtn /> */}
             <ShareBtn />
           </View>

@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {primaryColor} from './AppBar';
 import ArticleItem from './ArticleItem';
-// import {articles} from './data';
 import {Button, Card} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {onValue, ref} from 'firebase/database';
 import {database} from '../../firebase';
+import {AuthenticatedUserContext} from '../../Store/Provider';
 
 const TabbedLayout = ({navigation}) => {
-  const [articles, setArticles] = React.useState([]);
+  const {articles, setArticles} = useContext(AuthenticatedUserContext);
 
   React.useEffect(() => {
     const databaseFetch= ()=>{
@@ -48,6 +48,8 @@ const TabbedLayout = ({navigation}) => {
           author={article.author}
           image={article.imageUrl}
           text={article.text}
+          likes={article.likes}
+          comments={article.comments}
           nav={navigation}
         />
       ))}

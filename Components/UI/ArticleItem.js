@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet, View} from 'react-native';
-import {Avatar, Button, Card, Text} from 'react-native-paper';
-import {grey, primaryColor} from './AppBar';
+import {Card, Text} from 'react-native-paper';
+import { primaryColor} from './AppBar';
 import ArticleInfo from './ArticleInfo';
 
 const ArticleItem = (props, {nav}) => {

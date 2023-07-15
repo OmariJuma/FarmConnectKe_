@@ -1,9 +1,8 @@
 import React, {useState, useContext} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {TextInput, Button, Avatar} from 'react-native-paper';
+import {TextInput, Avatar} from 'react-native-paper';
 import paperIcon from './paperIcon.png';
 import {primaryColor} from './AppBar';
-import {articles} from './data';
 import { ref, update} from 'firebase/database';
 import {database} from '../../firebase';
 import uuid  from 'react-native-uuid';
@@ -13,12 +12,20 @@ const Input = props => {
   const {user} = useContext(AuthenticatedUserContext);
   const [newComment, setNewComment] = useState({});
   const [isValid, setIsValid] = useState(true);
-  const addComment=(name, date, comment, articleId)=>{
+  const timezone={
+    timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+    hour12: false,
+  }
+  const date= new Date().toLocaleDateString('en-US',timezone)
+  const time= new Date().toLocaleTimeString('en-US',timezone)
+
+  const addComment=(name, date,time, comment, articleId)=>{
     const newId = uuid.v4();
     update(ref(database, '/Articles/'+articleId+'/comments/'+newId),{
       id:newId,
       name: name,
       date:date,
+      time:time,
       comment: comment,
       articleId: props.id
     })
@@ -26,7 +33,7 @@ const Input = props => {
   const submitHandler = () => {
     if (newComment.comment.trim().length > 0) {
       setIsValid(true);
-      addComment(newComment.name, newComment.date, newComment.comment, props.id);
+      addComment(newComment.name, newComment.date,newComment.time, newComment.comment, props.id);
       setNewComment('');
     } else {
       setIsValid(false);
@@ -52,7 +59,8 @@ const Input = props => {
           setIsValid(true);
           setNewComment({
             name: user.displayName,
-            date: new Date(),
+            date: date,
+            time: time,
             comment: e.nativeEvent.text,
           });
         }}

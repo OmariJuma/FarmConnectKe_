@@ -15,7 +15,6 @@ import {TextInput} from 'react-native-paper';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase';
 import {
-  AuthenticatedUserProvider,
   AuthenticatedUserContext,
 } from '../../Store/Provider';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';

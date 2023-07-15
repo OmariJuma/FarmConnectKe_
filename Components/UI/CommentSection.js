@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image} from 'react-native';
 import {Card, Text} from 'react-native-paper';
 import Comment from './Comment';
-import {articles} from './data';
+// import {articles} from './data';
 const CommentSection = (props) => {  
   console.log(props.id);
   const render=()=>{
