@@ -214,3 +214,14 @@ export async function writedata(id, title, date, author, category, imageUrl, tex
     likes: likes,
   }).then(res=>{console.log(res)})
 }
+
+export async function commentsForArticle(id, name, date, comment, articleId){
+  set(ref(database, "CommentsForArticles/"+id),{
+    id: id,
+    name: name,
+    date: date,
+    comment: comment,
+    articleId: articleId,
+  }).then(res=>{console.log(res)
+  })
+}

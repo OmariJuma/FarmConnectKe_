@@ -2,11 +2,28 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {primaryColor} from './AppBar';
 import ArticleItem from './ArticleItem';
-import {articles} from './data';
+// import {articles} from './data';
 import {Button, Card} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {onValue, ref} from 'firebase/database';
+import {database} from '../../firebase';
 
 const TabbedLayout = ({navigation}) => {
+  const [articles, setArticles] = React.useState([]);
+
+  React.useEffect(() => {
+    const databaseFetch= ()=>{
+    return onValue(ref(database, '/Articles/'), snapshot =>{
+      if(snapshot.exists()){
+        const data = snapshot.val();   
+        setArticles(data.filter(article => article.id >0 ));
+      }
+    })
+    }
+    databaseFetch();
+  },
+    []);
+
   return (
     <Card style={styles.card}>
       <View style={styles.headerContainer}>

@@ -28,7 +28,6 @@ import {
 } from './Store/Provider';
 import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
-import GetArticles from './Components/FireBaseUtilities/GetArticles';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -44,7 +43,6 @@ export default function App() {
       await new Promise(resolve => setTimeout(resolve, 2000));
       setIsLoading(false);
     };
-    // GetArticles();
     fetchData();
   }, []);
 

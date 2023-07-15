@@ -4,15 +4,26 @@ import {TextInput, Button, Avatar} from 'react-native-paper';
 import paperIcon from './paperIcon.png';
 import {primaryColor} from './AppBar';
 import {articles} from './data';
-
+import { ref, update} from 'firebase/database';
+import {database} from '../../firebase';
+import uuid  from 'react-native-uuid';
 const Input = props => {
   const [newComment, setNewComment] = useState({});
   const [isValid, setIsValid] = useState(true);
-
+  const addComment=(name, date, comment, articleId)=>{
+    const newId = uuid.v4();
+    update(ref(database, '/Articles/'+articleId+'/comments/'+newId),{
+      id:newId,
+      name: name,
+      date:date,
+      comment: comment,
+      articleId: props.id
+    })
+  }
   const submitHandler = () => {
     if (newComment.comment.trim().length > 0) {
       setIsValid(true);
-      articles[props.id].comments.push(newComment);
+      addComment(newComment.name, newComment.date, newComment.comment, props.id);
       setNewComment('');
     } else {
       setIsValid(false);
@@ -37,8 +48,8 @@ const Input = props => {
         onChange={e => {
           setIsValid(true);
           setNewComment({
-            name: 'Omar',
-            date: '19/6/2023',
+            name: 'Kimani',
+            date: '15/7/2023',
             comment: e.nativeEvent.text,
           });
         }}
