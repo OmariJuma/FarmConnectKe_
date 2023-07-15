@@ -8,6 +8,8 @@ import CommentSection from '../UI/CommentSection';
 import LikeBtn from '../UI/LikeBtn';
 import ShareBtn from '../UI/ShareBtn';
 import { AuthenticatedUserContext } from '../../Store/Provider';
+import {onValue, ref} from 'firebase/database';
+import {database} from '../../firebase';
 const ReadArticle = ({navigation, route}) => {
   const {articles} = useContext(AuthenticatedUserContext);
   var id = 1;
@@ -16,9 +18,17 @@ const ReadArticle = ({navigation, route}) => {
   }
   // console.log(articles[id-1].comments);
   const [comments, setComments] = React.useState(Object.values(articles[id-1].comments));
-  // React.useEffect(() => {
-
-  // },[]);
+  React.useEffect(() => {
+    const databaseFetch= ()=>{
+    return onValue(ref(database, '/Articles/'+id+'/comments'), snapshot =>{
+      if(snapshot.exists()){
+        const data = snapshot.val();   
+        setComments(Object.values(data));
+      }
+    })
+    }
+    databaseFetch();
+  },[]);
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       {id && (
