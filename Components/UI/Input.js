@@ -3,37 +3,43 @@ import {TouchableOpacity, View} from 'react-native';
 import {TextInput, Avatar} from 'react-native-paper';
 import paperIcon from './paperIcon.png';
 import {primaryColor} from './AppBar';
-import { ref, update} from 'firebase/database';
+import {ref, update} from 'firebase/database';
 import {database} from '../../firebase';
-import uuid  from 'react-native-uuid';
+import uuid from 'react-native-uuid';
 import {AuthenticatedUserContext} from '../../Store/Provider';
 
 const Input = props => {
   const {user} = useContext(AuthenticatedUserContext);
   const [newComment, setNewComment] = useState({});
   const [isValid, setIsValid] = useState(true);
-  const timezone={
-    timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+  const timezone = {
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     hour12: false,
-  }
-  const date= new Date().toLocaleDateString('en-US',timezone)
-  const time= new Date().toLocaleTimeString('en-US',timezone)
+  };
+  const date = new Date().toLocaleDateString('en-US', timezone);
+  const time = new Date().toLocaleTimeString('en-US', timezone);
 
-  const addComment=(name, date,time, comment, articleId)=>{
+  const addComment = (name, date, time, comment, articleId) => {
     const newId = uuid.v4();
-    update(ref(database, '/Articles/'+articleId+'/comments/'+newId),{
-      id:newId,
-      name: name,
-      date:date,
-      time:time,
+    update(ref(database, '/Articles/' + articleId + '/comments/' + newId), {
+      id: newId,
+      userId: user.userId,
+      date: date,
+      time: time,
       comment: comment,
-      articleId: props.id
-    })
-  }
+      articleId: props.id,
+    });
+  };
   const submitHandler = () => {
     if (newComment.comment.trim().length > 0) {
       setIsValid(true);
-      addComment(newComment.name, newComment.date,newComment.time, newComment.comment, props.id);
+      addComment(
+        newComment.name,
+        newComment.date,
+        newComment.time,
+        newComment.comment,
+        props.id,
+      );
       setNewComment('');
     } else {
       setIsValid(false);

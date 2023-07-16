@@ -23,7 +23,7 @@ const TabbedLayout = ({navigation}) => {
     databaseFetch();
   },
     []);
-
+console.log(articles)
   return (
     <Card style={styles.card}>
       <View style={styles.headerContainer}>
@@ -48,7 +48,7 @@ const TabbedLayout = ({navigation}) => {
           author={article.author}
           image={article.imageUrl}
           text={article.text}
-          likes={article.likes}
+          likes={article.likes?article.likes.likes:0}
           comments={article.comments}
           nav={navigation}
         />

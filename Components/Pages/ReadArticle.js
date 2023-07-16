@@ -16,8 +16,7 @@ const ReadArticle = ({navigation, route}) => {
   if (route.params) {
     id = route.params.articleId;
   }
-  // console.log(articles[id-1].comments);
-  const [comments, setComments] = React.useState(Object.values(articles[id-1].comments));
+  const [comments, setComments] = React.useState([]);
   React.useEffect(() => {
     const databaseFetch= ()=>{
     return onValue(ref(database, '/Articles/'+id+'/comments'), snapshot =>{
@@ -57,12 +56,12 @@ const ReadArticle = ({navigation, route}) => {
               alignItems: 'center',
               gap: 20,
             }}>
-            <LikeBtn likes={route.params.likes} isArticle={true} />
+            <LikeBtn likes={route.params.likes} isArticle={true} id={id}/>
             {/* <CommentBtn /> */}
             <ShareBtn />
           </View>
           <Input id={id} />
-          <CommentSection id={id} comments={comments} />
+          <CommentSection id={id} comments={comments}/>
         </View>
       )}
       {!id && <Text>Nothing</Text>}

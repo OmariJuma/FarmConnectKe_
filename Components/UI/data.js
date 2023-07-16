@@ -59,19 +59,6 @@ export const articles = [
     category: 'maize',
     imageUrl: 'https://picsum.photos/id/12/200/300',
     text: 'Maize farming, a cornerstone of global agriculture, is witnessing transformative changes as farmers and industry stakeholders embrace innovative techniques and collaborative efforts to enhance productivity, sustainability, and resilience. From advanced technologies to training programs, the maize farming sector is undergoing a revolution to meet the challenges of feeding a growing population and mitigating environmental impact.',
-    comments: [
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-    ],
-    likes: 5,
   },
   {
     id: 2,
@@ -83,19 +70,7 @@ export const articles = [
     category: 'maize',
     imageUrl: 'https://picsum.photos/id/11/200/300',
     text: 'Recent studies conducted by agricultural researchers have uncovered groundbreaking techniques that have shown a remarkable increase in maize crop yields. Precision planting, optimized fertilization schedules, and improved irrigation systems are among the innovative practices implemented by farmers, resulting in a 20% boost in maize production. These findings not only address global food security challenges but also contribute to agricultural sustainability by maximizing resource efficiency and minimizing waste.',
-    comments: [
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-    ],
-    likes: 5,
+    likes: 0,
   },
   {
     id: 3,
@@ -105,19 +80,6 @@ export const articles = [
     category: 'pest',
     imageUrl: 'https://picsum.photos/id/10/200/300',
     text: 'Researchers have developed a groundbreaking biocontrol method that offers a sustainable solution for managing crop pests. By utilizing natural enemies of pests, such as parasitic wasps and predatory insects, farmers can significantly reduce pesticide usage while maintaining crop health. This innovative approach shows great potential in minimizing environmental impact and promoting integrated pest management practices.',
-    comments: [
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-    ],
-    likes: 5,
   },
   {
     id: 4,
@@ -127,11 +89,6 @@ export const articles = [
     category: 'pest',
     imageUrl: 'https://picsum.photos/id/12/200/300',
     text: 'A new pest species has been identified, posing a significant threat to global agriculture. The invasive pest, tentatively named "Agroworm," has been detected in multiple countries and exhibits a voracious appetite for various crops. Scientists and agricultural organizations are working together to study the pest\'s behavior, develop control strategies, and implement quarantine measures to prevent its further spread. Immediate action is crucial to safeguarding crop yields and ensuring food security.',
-    comments: [
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-    ],
-    likes: 5,
   },
   {
     id: 5,
@@ -141,19 +98,6 @@ export const articles = [
     category: 'Beans',
     imageUrl: 'https://picsum.photos/id/10/200/300',
     text: "A comprehensive study conducted by nutritionists has underscored the numerous health benefits of including beans in one's diet. The research reveals that beans are a rich source of protein, fiber, vitamins, and minerals, contributing to improved heart health, better blood sugar management, and weight control. With these findings, nutritionists are encouraging individuals to incorporate more beans into their meals to enhance overall well-being.",
-    comments: [
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-    ],
-    likes: 5,
   },
   {
     id: 6,
@@ -163,19 +107,6 @@ export const articles = [
     category: 'Mangoes',
     imageUrl: 'https://picsum.photos/id/12/200/300',
     text: 'Plant breeders have developed a new hybrid mango variety that exhibits enhanced disease resistance, offering a solution to combat common mango diseases. This breakthrough comes as welcome news for mango farmers, who often face challenges in managing diseases that can affect fruit quality and yield. The disease-resistant hybrid mango variety promises to ensure more reliable and profitable mango harvests while reducing the need for chemical interventions.',
-    comments: [
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-    ],
-    likes: 5,
   },
   {
     id: 7,
@@ -185,19 +116,6 @@ export const articles = [
     category: 'Sorghum',
     imageUrl: 'https://picsum.photos/id/12/200/300',
     text: "Agricultural experts are recognizing the economic potential of sorghum, a highly drought-tolerant crop. Sorghum's ability to thrive in arid and semi-arid regions makes it a valuable option for farmers facing water scarcity and climate change challenges. With diverse applications ranging from food and animal feed to biofuels, sorghum cultivation offers promising opportunities for rural economies and",
-    comments: [
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Dave', date: '12/12/2020', comment: 'This is a comment'},
-      {name: 'Mary', date: '12/12/2020', comment: 'This is a comment'},
-    ],
-    likes: 5,
   },
 ];
 export default data;
@@ -211,7 +129,6 @@ export async function writedata(id, title, date, author, category, imageUrl, tex
     category: category,
     imageUrl: imageUrl, 
     text: text, 
-    likes: likes,
   }).then(res=>{console.log(res)})
 }
 
@@ -225,3 +142,7 @@ export async function commentsForArticle(id, name, date, comment, articleId){
   }).then(res=>{console.log(res)
   })
 }
+
+// articles.map((article)=>{
+//   writedata(article.id, article.title, article.date, article.author, article.category, article.imageUrl, article.text)
+// } )

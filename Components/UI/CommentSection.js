@@ -6,11 +6,14 @@ import Comment from './Comment';
 const CommentSection = (props) => {  
   console.log(props.id);
   const render=()=>{
-    if(props.id){
+    if(props.id && props.comments){
       return props.comments.map((comment,index)=>{
-        return <Comment key={index} text={comment.comment} name={comment.name} date={comment.date}/>
+        return <Comment key={index} id={props.id} text={comment.comment} name={comment.name} date={comment.date} likes={props.likes}/>
       })
       
+    }
+    else{
+      return <text>No comments yet</text>
     }
     
 

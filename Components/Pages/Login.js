@@ -40,6 +40,7 @@ export default function Login({navigation}) {
           console.log(res._tokenResponse);
           setUser(
           {
+            userId: res._tokenResponse.localId,
             email: res._tokenResponse.email,
             displayName: res._tokenResponse.displayName,
             photoURL: res._tokenResponse.photoUrl,

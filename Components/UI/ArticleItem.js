@@ -8,6 +8,7 @@ const ArticleItem = (props, {nav}) => {
   const handlePress = () => {
     props.nav.navigate('Read Article', {
       articleId: props.id,
+      likes: props.likes,
     });
   };
 
