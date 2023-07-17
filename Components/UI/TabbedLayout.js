@@ -23,7 +23,6 @@ const TabbedLayout = ({navigation}) => {
     databaseFetch();
   },
     []);
-console.log(articles)
   return (
     <Card style={styles.card}>
       <View style={styles.headerContainer}>

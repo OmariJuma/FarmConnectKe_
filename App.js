@@ -80,7 +80,7 @@ export default function App() {
         },
       })}>
       <Tab.Screen name={homeName} component={Home} />
-      {/* <Tab.Screen name={customerCare} component={CustomerCare} /> */}
+      <Tab.Screen name={customerCare} component={CustomerCare} />
       <Tab.Screen
         name={BookmarkName}
         component={Bookmark}
