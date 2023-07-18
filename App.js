@@ -28,6 +28,7 @@ import {
 } from './Store/Provider';
 import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
+import Profile from './Components/Pages/Profile';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -37,6 +38,7 @@ export default function App() {
   const ReadArticleName = 'Read Article';
   const customerCare = 'Customer Care';
   const BookmarkName = 'Bookmark';
+  const profileName= "Profile"
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +78,10 @@ export default function App() {
               <AntDesign name={'customerservice'} size={size} color={color} />
             );
           }
+          else if(rn == profileName){
+            iconName = focused = "person-circle";
+            // return <Ionicons name={profileName} size={size} color={color} />;
+          }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}>
@@ -97,6 +103,8 @@ export default function App() {
           headerTitle: '',
         }}
       />
+      <Tab.Screen component={Profile} name={profileName}/>
+
     </Tab.Navigator>
   );
 
