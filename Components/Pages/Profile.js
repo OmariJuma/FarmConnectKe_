@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import UserAvatar from "react-native-user-avatar"
-import { primaryColor } from '../UI/AppBar';
+import { primaryColor, primaryColorVariant } from '../UI/AppBar';
 
 const deviceWidth= (Dimensions.get("window").width)/2-20
 
@@ -15,10 +15,13 @@ const Profile = () => {
           name="Wim Mostmans"
           size={100}
         />
-
+        <View>
         <Text style={styles.username}>
           Wim Mostmans
         </Text>
+        <Text style={styles.userText}>gmail@gmail.com</Text>
+        <Text style={styles.userText}>079123456</Text>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button textColor='white' style={styles.buttonAlt} >View Stats</Button>
@@ -46,7 +49,16 @@ alignSelf:"flex-start",
   username: {
     fontSize: 20,
     fontWeight: 'bold',
+    color:primaryColor,
     marginLeft: 10,
+  },
+  userText:{
+    fontSize: 16,
+    marginStart: 10,
+    lineHeight:30,
+    fontWeight:"700",
+    color:primaryColorVariant
+
   },
   buttonContainer: {
     flexDirection: 'row',

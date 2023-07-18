@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  // TextInput,
   Image,
   SafeAreaView,
   TouchableOpacity,
@@ -13,7 +12,9 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import {ref, set} from 'firebase/database';
 import {auth} from '../../firebase';
+import {database} from '../../firebase';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';
 const backImage = require('../../assets/signup.png');
 
@@ -25,7 +26,6 @@ export default function Signup({navigation}) {
   const [phoneNo, setPhoneNo] = useState('');
   const [isText, setIsText] = useState(false);
   const [error, setError] = useState('');
-
   const onHandleSignup = () => {
     if (
       firstName.trim().length > 2 &&
@@ -45,15 +45,19 @@ export default function Signup({navigation}) {
         .then(credentials => {
           console.log('Signup success');
           updateProfile(credentials.user, {
+            displayName: firstName + ' ' + secondName,
+            photoURL:
+              'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
+          });
+          set(ref(database, 'Users/' + credentials.user.uid), {
+            id: credentials.user.uid,
+            email: email,
             firstName: firstName,
             secondName: secondName,
-            displayName: firstName + ' ' + secondName,
-            phoneNumber: phoneNo,
-            photoURL: 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
+            phoneNo: phoneNo,
           });
         })
-        .then(updatedProfile => {
-          console.log(updatedProfile);
+        .then(updated => {
           navigation.navigate('Login');
         })
         .catch(err => Alert.alert('Login error', err.message));
