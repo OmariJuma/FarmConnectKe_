@@ -29,6 +29,7 @@ import {
 import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
 import Profile from './Components/Pages/Profile';
+import TempScreen from './Components/Pages/Editor';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -114,6 +115,7 @@ export default function App() {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Tabs" component={NavTabs} />
+      <Stack.Screen name="editor" component={TempScreen} />
       <Stack.Screen
         name={ReadArticleName}
         component={ReadArticle}

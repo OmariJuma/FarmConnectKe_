@@ -32,7 +32,7 @@ const TabbedLayout = ({navigation}) => {
         <Button
           onPress={() => navigation.navigate('AllArticles')}
           style={[styles.headerText]}>
-          <Text style={[styles.headerText]}>
+          <Text style={[styles.headerText]} onPress={navigation.navigate("editor")}>
             All Articles  </Text>
           <Icon size={17} style={[styles.headerText]} name="arrow-right" />
         </Button>
