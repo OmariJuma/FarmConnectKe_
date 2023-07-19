@@ -8,17 +8,19 @@ import {
   View,
 } from 'react-native';
 import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
+import ImagePicker from '../Utility/ImagePicker';
 
 const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
 const TempScreen = () => {
   const richText = React.useRef();
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor:"white",padding:20}}>
       <ScrollView >
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{flex: 1}}>
-          <Text>Description:</Text>
+          <Text>Tell your story</Text>
           <RichEditor
             ref={richText}
             focusable={true}
@@ -34,6 +36,7 @@ const TempScreen = () => {
           actions={[
             actions.undo,
             actions.redo,
+            actions.heading1,
             actions.insertImage,
             actions.setBold,
             actions.setItalic,
@@ -43,10 +46,11 @@ const TempScreen = () => {
             actions.keyboard,
             actions.setStrikethrough,
             actions.setUnderline,
-            actions.insertVideo,
+            // actions.insertVideo,
             // actions.removeFormat,
             // actions.checkboxList,
           ]}
+          onPressAddImage={()=>ImagePicker(richText)}
           iconMap={{[actions.heading1]: handleHead}}
         />
       </View>

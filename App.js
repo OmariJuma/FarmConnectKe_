@@ -111,6 +111,7 @@ export default function App() {
 
   const ChatStack = () => (
     <Stack.Navigator
+    initialRouteName='Tabs'
       screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
