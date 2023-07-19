@@ -8,7 +8,6 @@ const Home = ({navigation}) => {
   return (
     <ScrollView style={{backgroundColor: '#fff'}}>
       <AppBar />
-
       <CarouselCards navigation={navigation} />
       <TabbedLayout navigation={navigation} />
     </ScrollView>

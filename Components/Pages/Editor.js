@@ -11,17 +11,18 @@ import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 import ImagePicker from '../Utility/ImagePicker';
 
 const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
-const TempScreen = () => {
+const ArticleCreator = () => {
   const richText = React.useRef();
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor:"white",padding:20}}>
+    <SafeAreaView style={{flex: 1,padding:20}}>
       <ScrollView >
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{flex: 1}}>
-          <Text>Tell your story</Text>
+          <Text style={{fontSize:20, color:"grey"}}>Tell your story</Text>
           <RichEditor
+          initialHeight={400}
             ref={richText}
             focusable={true}
             onChange={descriptionText => {
@@ -51,11 +52,12 @@ const TempScreen = () => {
             // actions.checkboxList,
           ]}
           onPressAddImage={()=>ImagePicker(richText)}
-          iconMap={{[actions.heading1]: handleHead}}
+          iconMap={{[actions.heading1]: handleHead}
+        }
         />
       </View>
     </SafeAreaView>
   );
 };
 
-export default TempScreen;
+export default ArticleCreator;

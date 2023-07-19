@@ -30,6 +30,7 @@ import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
 import Profile from './Components/Pages/Profile';
 import TempScreen from './Components/Pages/Editor';
+import ArticleCreator from './Components/Pages/Editor';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -38,7 +39,7 @@ export default function App() {
   const homeName = 'Home';
   const ReadArticleName = 'Read Article';
   const customerCare = 'Customer Care';
-  const BookmarkName = 'Bookmark';
+  const CreateArticle = 'Create Article';
   const profileName= "Profile"
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -70,8 +71,8 @@ export default function App() {
 
           if (rn === homeName) {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (rn === BookmarkName) {
-            iconName = focused ? 'bookmark' : 'bookmark-outline';
+          } else if (rn === CreateArticle) {
+            iconName = focused = "add-circle-sharp";
           }
           //returning an icon component
           else if (rn == customerCare) {
@@ -89,19 +90,19 @@ export default function App() {
       <Tab.Screen name={homeName} component={Home} />
       <Tab.Screen name={customerCare} component={CustomerCare} />
       <Tab.Screen
-        name={BookmarkName}
-        component={Bookmark}
+        name={CreateArticle}
+        component={ArticleCreator}
         options={{
-          headerShown: true,
+         headerShown: false,
           headerStyle: {
-            backgroundColor: primaryColor,
+            backgroundColor: "white",
           },
-          headerTintColor: '#fff',
+          headerTintColor: '#000',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerTitleAlign: 'center',
-          headerTitle: '',
+          headerTitle: 'Create Article',
         }}
       />
       <Tab.Screen component={Profile} name={profileName}/>
@@ -111,7 +112,7 @@ export default function App() {
 
   const ChatStack = () => (
     <Stack.Navigator
-    initialRouteName='Tabs'
+    initialRouteName='Login'
       screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
