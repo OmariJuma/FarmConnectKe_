@@ -21,17 +21,7 @@ const PickImage = richText => {
       let url=getDownloadURL(snapshot.ref)
 
     })
-    // ConvertBase64(image, richText);
   });
 };
-// const ConvertBase64 = (image, richText) => {
-//     ImgToBase64.getBase64String(image.path)
-//       .then(base64String => {
-//         const str = `data:${image.mime};base64,${base64String}`
-//         richText.current?.insertImage(
-//           str
-//         );      })
-//       .catch(err => console.log(err));
-//   };
 
 export default PickImage;
