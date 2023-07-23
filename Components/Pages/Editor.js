@@ -23,6 +23,7 @@ const ArticleCreator = () => {
           <Text style={{fontSize:20, color:"grey"}}>Tell your story</Text>
           <RichEditor
           initialHeight={400}
+          scrollEnabled={true}
             ref={richText}
             focusable={true}
             onChange={descriptionText => {

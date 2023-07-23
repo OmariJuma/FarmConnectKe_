@@ -13,6 +13,7 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
+    "base-64": "^1.0.0",
     "firebase": "^9.22.2",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
