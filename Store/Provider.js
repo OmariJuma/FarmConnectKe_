@@ -18,10 +18,13 @@ export const AuthenticatedUserProvider = ({children}) => {
     photoUrl:""
   });
   const [articles, setArticles] = useState([]);
-
+  const [insertedImg, setInsertedImg] = useState({
+    image:"",
+    mimeType:""
+  });
   return (
     <AuthenticatedUserContext.Provider
-      value={{user, setUser, articles, setArticles}}>
+      value={{user, setUser, articles, setArticles, insertedImg,setInsertedImg}}>
       {children}
     </AuthenticatedUserContext.Provider>
   );

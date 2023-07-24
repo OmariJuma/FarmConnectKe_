@@ -5,7 +5,7 @@ import {decode} from 'base-64';
 if (typeof atob === 'undefined') {
   global.atob = decode;
 }
-const PickImage = richText => {
+const PickImage = (richText, setInsertedImg) => {
   ImagePicker.openPicker({
     width: 300,
     height: 400,
@@ -13,6 +13,10 @@ const PickImage = richText => {
   }).then(image => {
     ImgToBase64.getBase64String(image.path)
       .then(base64String => {
+        setInsertedImg({
+          image: base64String,
+          mimeType: image.mime,
+        });
         console.log(base64String);
         richText.current?.insertImage(
           `data:${image.mime};base64,${base64String}`,

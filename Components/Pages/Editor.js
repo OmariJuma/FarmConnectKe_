@@ -19,50 +19,52 @@ const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
 
 const ArticleCreator = () => {
   const richText = React.useRef();
-  const {user} = useContext(AuthenticatedUserContext);
-  const [image, setImage] = React.useState(null);
-  const [title, setTitle] = React.useState(null);
-  const {html, setHtml} = React.useState('');
-
-  function extractImgSrc(htmlString) {
-    const imgTagRegex = /<img[^>]*?src=["'](.*?)["'][^>]*?>/i;
-    const match = htmlString.match(imgTagRegex);
-    console.log('the image src: ', match[0]);
-    if (match) {
-      setImage(match[0]);
-      return image; // Return the matched img tag
-    }
-
-    return null; // Return null if no img tag is found
-  }
-
-  function extractTitle(htmlString) {
+  const {user, insertedImg, setInsertedImg} = useContext(AuthenticatedUserContext);
+  const [title, setTitle] = React.useState("");
+  const [html, setHtmlText] = React.useState("");
+  
+  function extractTitle() {
     const titleRegex = /<h1[^>]*?>(.*?)<\/h1>/i;
-    const match = htmlString.match(titleRegex);
-    console.log('The title is ' + match[0]);
-    if (match) {
-      return setTitle(match[0]); // Return the matched img tag
+    const match = html.match(titleRegex);
+    console.log("the title: ")
+    console.log(match)
+    setTitle(match[1]); // Return the matched img tag
+    if (match && match[1]) {
+      console.log('The title is ' + match[1]);
+      return match[1];
+    }
+  
+    return ""; // Return null if no title tag is found
+  }
+  
+  const handlePostSubmit = async () => {
+    // Extract the image and title from the HTML
+    const extractedTitle = extractTitle()
+  
+    // Check if the title, text, and image have valid values
+    if (!extractedTitle || !html) {
+      console.error('Title, text, or image is missing or invalid.');
+      return;
     }
 
-    return null; // Return null if no img tag is found
-  }
-
-  const handlePostSubmit = () => {
-    extractImgSrc(html);
-    extractTitle(html);
     const postId = uuid.v4();
-
-    set(ref(database, 'Articles/' + postId), {
+  
+   await set(ref(database, 'Articles/' + postId), {
       id: postId,
       title: title,
       text: html,
-      image: src,
+      image: insertedImg.image,
+      mimeType: insertedImg.mimeType,
       category: "General",
       createdOn: Date.now(),
       authorName: user.firstName + ' ' + user.secondName,
+    }).then(() => {
+      console.log('Article submitted successfully.');
+    }).catch((error) => {
+      console.error('Error while submitting article:', error);
     });
   };
-
+  // console.log("from rich text", richText.current?.html)
   return (
     <SafeAreaView style={{flex: 1, padding: 20}}>
       <ScrollView>
@@ -76,7 +78,8 @@ const ArticleCreator = () => {
             ref={richText}
             focusable={true}
             onChange={descriptionText => {
-              setHtml(descriptionText);
+              setHtmlText(descriptionText)
+              console.log("html content: ", descriptionText)
             }}
           />
         </KeyboardAvoidingView>
@@ -101,7 +104,7 @@ const ArticleCreator = () => {
             // actions.removeFormat,
             // actions.checkboxList,
           ]}
-          onPressAddImage={() => ImagePicker(richText)}
+          onPressAddImage={() => ImagePicker(richText, setInsertedImg)}
           iconMap={{[actions.heading1]: handleHead}}
         />
       </View>
