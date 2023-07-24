@@ -14,10 +14,10 @@ import {
 import {TextInput} from 'react-native-paper';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase';
-import {
-  AuthenticatedUserContext,
-} from '../../Store/Provider';
+import {AuthenticatedUserContext} from '../../Store/Provider';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';
+import {onValue, ref} from 'firebase/database';
+import {database} from '../../firebase';
 
 const backImage = require('../../assets/login.png');
 
@@ -38,22 +38,34 @@ export default function Login({navigation}) {
         .then(res => {
           console.log('Login success');
           console.log(res._tokenResponse);
-          setUser(
-          {
+          setError('');
+          setUser({
             userId: res._tokenResponse.localId,
             email: res._tokenResponse.email,
-            displayName: res._tokenResponse.displayName,
             photoURL: res._tokenResponse.photoUrl,
-          }
+          });
+          onValue(
+            ref(database, 'Users/' + res._tokenResponse.localId),
+            snapshot => {
+              if (snapshot.val()) {
+                setUser(prev => ({
+                  ...prev,
+                  firstName: snapshot.val().firstName,
+                  secondName: snapshot.val().secondName,
+                  phoneNo: snapshot.val().phoneNo,
+                }));
+              }
+            },
           );
           navigation.replace('Tabs');
-          setError("");
         })
         .catch(err => Alert.alert('Login error', err.message));
     } else if (!email.includes(['@' || '.'])) {
       setError('Please enter a valid email address and password');
     } else {
-      setError('Please fill in all the fields correctly.\nTip 1: make sure your email has an @\nTip 2: The password should be greater than 7 characters');
+      setError(
+        'Please fill in all the fields correctly.\nTip 1: make sure your email has an @\nTip 2: The password should be greater than 7 characters',
+      );
     }
   };
 
@@ -105,7 +117,7 @@ export default function Login({navigation}) {
               backgroundColor: '#ffdcdf',
               textAlign: 'left',
               paddingVertical: 10,
-              paddingLeft:10,
+              paddingLeft: 10,
               borderColor: 'red',
               color: 'red',
             }}>

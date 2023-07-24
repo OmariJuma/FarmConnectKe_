@@ -1,26 +1,28 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import UserAvatar from "react-native-user-avatar"
 import { primaryColor, primaryColorVariant } from '../UI/AppBar';
+import {AuthenticatedUserContext} from '../../Store/Provider';
 
 const deviceWidth= (Dimensions.get("window").width)/2-20
 
 const Profile = () => {
+  const {user} = useContext(AuthenticatedUserContext);
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
       <UserAvatar
           color={primaryColor}
-          name="Wim Mostmans"
+          name={user.firstName+" "+user.secondName}
           size={100}
         />
         <View>
         <Text style={styles.username}>
-          Wim Mostmans
-        </Text>
-        <Text style={styles.userText}>gmail@gmail.com</Text>
-        <Text style={styles.userText}>079123456</Text>
+        {user.firstName+" "+user.secondName}       
+         </Text>
+        <Text style={styles.userText}>{user.email}</Text>
+        <Text style={styles.userText}>{user.phoneNo}</Text>
         </View>
       </View>
       <View style={styles.buttonContainer}>
