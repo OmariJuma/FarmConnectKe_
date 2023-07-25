@@ -7,8 +7,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StatusBar,
-  Alert,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {signInWithEmailAndPassword} from 'firebase/auth';
@@ -26,11 +26,14 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [isText, setIsText] = useState(false);
   const [error, setError] = useState('');
-  const showErrorToast = () => Toast.error('Please enter a valid email address and password', 'top');
+  const [isLoading, setIsLoading] = useState(false);
+  const showErrorToast = () =>
+    Toast.error('Please enter a valid email address and password', 'top');
   const showSuccessToast = () => Toast.success('Login successful', 'top');
 
   const {user, setUser} = useContext(AuthenticatedUserContext);
   const onHandleLogin = async () => {
+    setIsLoading(true);
     if (
       email.trim().length > 6 &&
       email.includes(['@' && '.']) &&
@@ -38,7 +41,8 @@ export default function Login({navigation}) {
     ) {
       await signInWithEmailAndPassword(auth, email, password)
         .then(res => {
-          showSuccessToast()
+          showSuccessToast();
+          setIsLoading(false);
           setError('');
           setUser({
             userId: res._tokenResponse.localId,
@@ -60,11 +64,15 @@ export default function Login({navigation}) {
           );
           navigation.replace('Tabs');
         })
-        .catch(err => Toast.error("error message: "+err.message, "top"));
+        .catch(err => Toast.error('error message: ' + err.message, 'top'));
     } else if (!email.includes(['@' || '.'])) {
+      setIsLoading(false);
       setError('Please enter a valid email address and password');
-      Toast.error('Provide a valid email address and password', 'top',{height: 300});
+      Toast.error('Provide a valid email address and password', 'top', {
+        height: 300,
+      });
     } else {
+      setIsLoading(false);
       setError(
         'Please fill in all the fields correctly.\nTip 1: make sure your email has an @\nTip 2: The password should be greater than 7 characters',
       );
@@ -128,10 +136,15 @@ export default function Login({navigation}) {
         )}
 
         <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
-          <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
-            {' '}
+          {!isLoading&& <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
             Log In
-          </Text>
+          </Text>}
+          {isLoading && <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <ActivityIndicator size="large" color="white" />
+            <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
+              Logging In...
+            </Text>
+          </View>}
         </TouchableOpacity>
         <View
           style={{

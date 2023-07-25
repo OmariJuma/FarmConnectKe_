@@ -11,11 +11,13 @@ import {
   ScrollView,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
+import { ActivityIndicator } from 'react-native';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {ref, set} from 'firebase/database';
 import {auth} from '../../firebase';
 import {database} from '../../firebase';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';
+import {Toast } from "toastify-react-native"
 const backImage = require('../../assets/signup.png');
 
 export default function Signup({navigation}) {
@@ -26,7 +28,10 @@ export default function Signup({navigation}) {
   const [phoneNo, setPhoneNo] = useState('');
   const [isText, setIsText] = useState(false);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const onHandleSignup = () => {
+    setIsLoading(true);
     if (
       firstName.trim().length > 2 &&
       secondName.trim().length > 2 &&
@@ -39,11 +44,14 @@ export default function Signup({navigation}) {
         password.trim().toString() == '12345678' ||
         password.trim().toString() == '1234567890'
       ) {
+        setIsLoading(false);
+        Toast.error("Password cannot be 12345678 or 1234567890","top")
         return setError('Password cannot be ' + password);
       }
       createUserWithEmailAndPassword(auth, email, password)
         .then(credentials => {
-          console.log('Signup success');
+          setIsLoading(false);
+          Toast.success('Signup success',"top");
           updateProfile(credentials.user, {
             displayName: firstName + ' ' + secondName,
             photoURL:
@@ -60,7 +68,9 @@ export default function Signup({navigation}) {
         .then(updated => {
           navigation.navigate('Login');
         })
-        .catch(err => Alert.alert('Login error', err.message));
+        .catch(err =>{
+          setIsLoading(false);
+          return Alert.alert('Login error', err.message)});
     } else if (
       !email.includes(['@' || '.']) ||
       password.trim().length < 7 ||
@@ -68,10 +78,12 @@ export default function Signup({navigation}) {
       secondName.trim().length < 2 ||
       phoneNo.trim().length < 10
     ) {
+      setIsLoading(false);
       setError(
         'Please enter: \nTip 1: A valid email address and password which is not 12345678 or 1234567890 \nTip 2: First Name and Second Name should not be empty or less than three characters\nTip 3: Phone number should be ten digits e.g 07XXXXXXXX or 011XXXXXXX',
       );
     } else {
+      setIsLoading(false);
       setError(
         'Please fill in all the fields correctly.\nTip 1: make sure your email has an @\nTip 2: The password should be greater than 7 characters',
       );
@@ -157,10 +169,16 @@ export default function Signup({navigation}) {
         )}
 
         <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
-          <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
+          {!isLoading&&<Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
             {' '}
             Sign Up
-          </Text>
+          </Text>}
+          {isLoading && <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <ActivityIndicator size="large" color="white" />
+            <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
+              Creating Account...
+            </Text>
+          </View>}
         </TouchableOpacity>
         <View
           style={{

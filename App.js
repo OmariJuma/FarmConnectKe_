@@ -1,12 +1,9 @@
 import React, {
-  createContext,
-  lazy,
-  useContext,
   useEffect,
   useState,
 } from 'react';
-import {ActivityIndicator, PaperProvider, Text} from 'react-native-paper';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import { PaperProvider} from 'react-native-paper';
+import {Image, Dimensions, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -34,7 +31,7 @@ import ArticleCreator from './Components/Pages/Editor';
 export default function App() {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
-  const {user, setUser} = useContext(AuthenticatedUserContext);
+  const deviceWidth = Dimensions.get('window').width;
   const homeName = 'Home';
   const ReadArticleName = 'Read Article';
   const customerCare = 'Customer Care';
@@ -167,6 +164,7 @@ export default function App() {
           <NavigationContainer>
             <ToastManager 
             height={100}
+            width={deviceWidth-30}
             />
             <SafeAreaView style={styles.container}>
               <AuthenticatedUserProvider>
