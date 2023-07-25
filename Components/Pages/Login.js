@@ -17,6 +17,7 @@ import {AuthenticatedUserContext} from '../../Store/Provider';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';
 import {onValue, ref} from 'firebase/database';
 import {database} from '../../firebase';
+import {Toast} from 'toastify-react-native';
 
 const backImage = require('../../assets/login.png');
 
@@ -25,6 +26,8 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [isText, setIsText] = useState(false);
   const [error, setError] = useState('');
+  const showErrorToast = () => Toast.error('Please enter a valid email address and password', 'top');
+  const showSuccessToast = () => Toast.success('Login successful', 'top');
 
   const {user, setUser} = useContext(AuthenticatedUserContext);
   const onHandleLogin = async () => {
@@ -35,8 +38,7 @@ export default function Login({navigation}) {
     ) {
       await signInWithEmailAndPassword(auth, email, password)
         .then(res => {
-          console.log('Login success');
-          console.log(res._tokenResponse);
+          showSuccessToast()
           setError('');
           setUser({
             userId: res._tokenResponse.localId,
@@ -58,9 +60,10 @@ export default function Login({navigation}) {
           );
           navigation.replace('Tabs');
         })
-        .catch(err => Alert.alert('Login error', err.message));
+        .catch(err => Toast.error("error message: "+err.message, "top"));
     } else if (!email.includes(['@' || '.'])) {
       setError('Please enter a valid email address and password');
+      Toast.error('Provide a valid email address and password', 'top',{height: 300});
     } else {
       setError(
         'Please fill in all the fields correctly.\nTip 1: make sure your email has an @\nTip 2: The password should be greater than 7 characters',

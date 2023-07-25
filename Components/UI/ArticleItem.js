@@ -4,7 +4,7 @@ import {Card, Text} from 'react-native-paper';
 import {primaryColor} from './AppBar';
 import ArticleInfo from './ArticleInfo';
 
-const ArticleItem = (props, {nav}) => {
+const ArticleItem = (props) => {
   const handlePress = () => {
     props.nav.navigate('Read Article', {
       articleId: props.id,
@@ -16,15 +16,11 @@ const ArticleItem = (props, {nav}) => {
     <TouchableOpacity onPress={handlePress}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {props.image !== '' && (
-            <Image source={{uri: props.image}} style={styles.image} />
-          )}
-          {props.image === '' && (
+         
             <Image
-              source={`data:${props.mimeType};base64,${props.imageString}`}
+              source={{uri:`data:${props.mimeType};base64,${props.imageString}`}}
               style={styles.image}
             />
-          )}
         </View>
         <View style={styles.textContainer}>
           <Text

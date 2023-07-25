@@ -11,6 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import ToastManager from "toastify-react-native";
 import {primaryColor} from './Components/UI/AppBar';
 import Home from './Components/Pages/Home';
 import ReadArticle from './Components/Pages/ReadArticle';
@@ -20,8 +21,6 @@ import Bookmark from './Components/Pages/Bookmark';
 import CustomerCare from './Components/Pages/CustomerCare';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {onAuthStateChanged} from 'firebase/auth';
-import {auth} from './firebase';
 import {
   AuthenticatedUserProvider,
   AuthenticatedUserContext,
@@ -64,6 +63,9 @@ export default function App() {
           height: 60,
           borderTopColor: primaryColor,
           borderTopWidth: 1,
+          // position: "relative",
+          // bottom: 0,
+          // elevation: 0,
         },
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
@@ -163,6 +165,9 @@ export default function App() {
       {!isLoading && (
         <PaperProvider>
           <NavigationContainer>
+            <ToastManager 
+            height={100}
+            />
             <SafeAreaView style={styles.container}>
               <AuthenticatedUserProvider>
                 <ChatStack />

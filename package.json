@@ -30,7 +30,8 @@
     "react-native-user-avatar": "^1.0.8",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-webview": "^13.2.3"
+    "react-native-webview": "^13.2.3",
+    "toastify-react-native": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
