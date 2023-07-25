@@ -20,15 +20,16 @@ const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
 const ArticleCreator = () => {
   const richText = React.useRef();
   const {user, insertedImg, setInsertedImg} = useContext(AuthenticatedUserContext);
-  const [title, setTitle] = React.useState("");
   const [html, setHtmlText] = React.useState("");
+  var title;
+  var id;
   
   function extractTitle() {
     const titleRegex = /<h1[^>]*?>(.*?)<\/h1>/i;
     const match = html.match(titleRegex);
     console.log("the title: ")
     console.log(match)
-    setTitle(match[1]); // Return the matched img tag
+    title=match[1]; // Return the matched img tag
     if (match && match[1]) {
       console.log('The title is ' + match[1]);
       return match[1];
@@ -36,10 +37,18 @@ const ArticleCreator = () => {
   
     return ""; // Return null if no title tag is found
   }
+  const generateRandomWholeNumber=() =>{
+   const min = Math.floor(20);
+   const max = Math.floor(5000);
+    const randomDecimal = Math.random();
+    const randomWholeNumber = Math.floor(randomDecimal * (max - min + 1)) + min;
+    id= randomWholeNumber;
+  }
   
   const handlePostSubmit = async () => {
     // Extract the image and title from the HTML
     const extractedTitle = extractTitle()
+    generateRandomWholeNumber();
   
     // Check if the title, text, and image have valid values
     if (!extractedTitle || !html) {
@@ -49,14 +58,14 @@ const ArticleCreator = () => {
 
     const postId = uuid.v4();
   
-   await set(ref(database, 'Articles/' + postId), {
-      id: postId,
+   await set(ref(database, 'Articles/' + id), {
+      id: id,
       title: title,
       text: html,
       image: insertedImg.image,
       mimeType: insertedImg.mimeType,
       category: "General",
-      createdOn: Date.now(),
+      date: Date.now(),
       authorName: user.firstName + ' ' + user.secondName,
     }).then(() => {
       console.log('Article submitted successfully.');

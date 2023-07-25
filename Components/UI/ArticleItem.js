@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet, View} from 'react-native';
 import {Card, Text} from 'react-native-paper';
-import { primaryColor} from './AppBar';
+import {primaryColor} from './AppBar';
 import ArticleInfo from './ArticleInfo';
 
 const ArticleItem = (props, {nav}) => {
@@ -16,7 +16,15 @@ const ArticleItem = (props, {nav}) => {
     <TouchableOpacity onPress={handlePress}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={{uri: props.image}} style={styles.image} />
+          {props.image !== '' && (
+            <Image source={{uri: props.image}} style={styles.image} />
+          )}
+          {props.image === '' && (
+            <Image
+              source={`data:${props.mimeType};base64,${props.imageString}`}
+              style={styles.image}
+            />
+          )}
         </View>
         <View style={styles.textContainer}>
           <Text
@@ -43,11 +51,7 @@ const ArticleItem = (props, {nav}) => {
           />
           <Card.Content>
             <View style={{marginTop: 20}}>
-              <ArticleInfo
-                author={props.author}
-                date={props.date}
-                size={30}
-              />
+              <ArticleInfo author={props.author} date={props.date} size={30} />
             </View>
           </Card.Content>
         </View>
