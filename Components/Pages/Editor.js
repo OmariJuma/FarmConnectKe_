@@ -13,7 +13,7 @@ import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 import ImagePicker from '../Utility/ImagePicker';
 import {Button, TextInput} from 'react-native-paper';
 import {database} from '../../firebase';
-import {ref, set} from 'firebase/database';
+import {ref, set, update} from 'firebase/database';
 import uuid from 'react-native-uuid';
 import {AuthenticatedUserContext} from '../../Store/Provider';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';
@@ -21,14 +21,14 @@ import {Toast} from 'toastify-react-native';
 
 const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
 
-const ArticleCreator = () => {
+const ArticleCreator = ({route}) => {
   const deviceWidth = Dimensions.get('window').width;
   const richText = React.useRef();
   const {user, insertedImg, setInsertedImg} = useContext(
     AuthenticatedUserContext,
   );
-  const [html, setHtmlText] = React.useState('');
-  const [category, setCategory] = React.useState();
+  const [html, setHtmlText] = React.useState( route.params ? richText.current?.setContentHTML(route.params.article.text): '');
+  const [category, setCategory] = React.useState( route.params ? route.params.article.category : '');
   const showSuccessToast = () =>
     Toast.success('Article submitted successfully', 'top');
   var title;
@@ -37,11 +37,8 @@ const ArticleCreator = () => {
   function extractTitle() {
     const titleRegex = /<h1[^>]*?>(.*?)<\/h1>/i;
     const match = html.match(titleRegex);
-    console.log('the title: ');
-    console.log(match);
     title = match[1]; // Return the matched img tag
     if (match && match[1]) {
-      console.log('The title is ' + match[1]);
       return match[1];
     }
 
@@ -56,10 +53,9 @@ const ArticleCreator = () => {
   };
 
   const handlePostSubmit = () => {
-
     // Check if the title, text, and image have valid values
     if (!extractedTitle || !html) {
-      Toast.error('Title, text, or image is missing or invalid.',"top");
+      Toast.error('Title, text, or image is missing or invalid.', 'top');
       return;
     }
 
@@ -68,16 +64,37 @@ const ArticleCreator = () => {
     const extractedTitle = extractTitle();
     generateRandomWholeNumber();
 
-    set(ref(database, 'Articles/' + id), {
-      id: id,
-      title: title,
-      text: html,
-      image: insertedImg.image,
-      mimeType: insertedImg.mimeType,
-      category: category,
-      date: Date.now(),
-      authorName: user.firstName + ' ' + user.secondName,
-    })
+    if (!route.params) {
+      set(ref(database, 'Articles/' + id), {
+        id: id,
+        title: title,
+        text: html,
+        image: insertedImg.image,
+        mimeType: insertedImg.mimeType,
+        category: category,
+        date: Date.now(),
+        authorName: user.firstName + ' ' + user.secondName,
+      })
+        .then(() => {
+          showSuccessToast();
+          setCategory('');
+          setHtmlText('');
+          richText.current?.setContentHTML('');
+        })
+        .catch(error => {
+          console.error('Error while submitting article:', error);
+        });
+    } else {
+      update(ref(database, 'Articles/' + route.params.article.id), {
+        id: route.params.article.id,
+        title: title,
+        text: html,
+        image: insertedImg.image,
+        mimeType: insertedImg.mimeType,
+        category: category,
+        date: Date.now(),
+        authorName: user.firstName + ' ' + user.secondName,
+      })
       .then(() => {
         showSuccessToast();
         setCategory('');
@@ -87,6 +104,7 @@ const ArticleCreator = () => {
       .catch(error => {
         console.error('Error while submitting article:', error);
       });
+    }
   };
   // console.log("from rich text", richText.current?.html)
   return (

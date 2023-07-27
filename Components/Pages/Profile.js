@@ -11,7 +11,7 @@ import {database} from '../../firebase';
 const deviceWidth = Dimensions.get('window').width / 2 - 20;
 const textInputWidth = Dimensions.get('window').width - 50; // Calculate TextInput width
 
-const ViewStats = ({user}) => {
+const ViewStats = ({user, navigation}) => {
   const {articles} = useContext(AuthenticatedUserContext);
   const [myArticles, setMyArticles] = useState([]);
   const cardWidth = Dimensions.get('window').width - 20;
@@ -46,6 +46,25 @@ const ViewStats = ({user}) => {
     );
   };
 
+  const editHandler = (article)=>{
+    Alert.alert(
+      'Are you sure you want to edit this article?',
+      "Press 'No' to cancel\nPress 'Yes' to proceed",
+      [
+        {
+          text: 'No',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            navigation.navigate('Create Article',{article : article})
+          },
+        },
+      ],
+    );
+
+  }
+
   return (
     <View>
       <Text style={styles.title}>Your articles ({articles.length})</Text>
@@ -62,7 +81,9 @@ const ViewStats = ({user}) => {
             <Button
               icon="pencil"
               style={{borderColor: primaryColor}}
-              textColor={primaryColor}>
+              textColor={primaryColor}
+              onPress={()=>editHandler(article)}
+              >
               {' '}
               Edit
             </Button>
@@ -203,7 +224,7 @@ const EditProfile = ({user, onUpdateProfile}) => {
   );
 };
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const {user, setUser} = useContext(AuthenticatedUserContext);
   const [showEditProfile, setShowEditProfile] = useState(false);
 
@@ -245,7 +266,7 @@ const Profile = () => {
       {showEditProfile ? (
         <EditProfile user={user} onUpdateProfile={handleUpdateProfile} />
       ) : (
-        <ViewStats user={user} />
+        <ViewStats user={user} navigation={navigation}/>
       )}
     </ScrollView>
   );
