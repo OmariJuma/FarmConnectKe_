@@ -52,6 +52,15 @@ const ArticleCreator = ({route}) => {
     id = randomWholeNumber;
   };
 
+  const clearEditorNRoute = ()=>{
+    richText.current?.setContentHTML("");
+    route.params.article.remove();
+  }
+  const clearEditor = ()=>{
+    richText.current?.setContentHTML("");
+
+  }
+
   const handlePostSubmit = () => {
     // Check if the title, text, and image have valid values
     if (!extractedTitle || !html) {
@@ -124,6 +133,8 @@ const ArticleCreator = ({route}) => {
               setHtmlText(descriptionText);
             }}
           />
+          {route.params && <Button buttonColor="#f9f9f9" textColor={primaryColor} style={styles.btnReset} onPress={clearEditorNRoute}>Reset Editor</Button>}
+          {!route.params && <Button buttonColor="#f9f9f9" textColor={primaryColor}  style={styles.btnReset} onPress={clearEditor}>Reset Editor</Button>}
           <TextInput
             mode="outlined"
             style={{margin: 20}}
@@ -181,6 +192,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 50,
   },
+  btnReset:{
+    backgroundColor: "#f9f9f9",
+    padding: 10,
+    borderRadius: 10,
+    width: '90%',
+    margin: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 50,
+    borderWidth:2,
+    borderColor: primaryColor
+  }
 });
 
 export default ArticleCreator;
