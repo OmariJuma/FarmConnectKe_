@@ -1,10 +1,10 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {View, StyleSheet, Dimensions, ScrollView, Alert} from 'react-native';
 import {Button, Card, Text, TextInput} from 'react-native-paper';
 import UserAvatar from 'react-native-user-avatar';
 import {primaryColor, primaryColorVariant} from '../UI/AppBar';
 import {AuthenticatedUserContext} from '../../Store/Provider';
-import {update, ref, onValue} from 'firebase/database';
+import {update, ref, onValue, remove} from 'firebase/database';
 import {Toast} from 'toastify-react-native';
 import {database} from '../../firebase';
 
@@ -14,7 +14,7 @@ const textInputWidth = Dimensions.get('window').width - 50; // Calculate TextInp
 const ViewStats = ({user}) => {
   const {articles} = useContext(AuthenticatedUserContext);
   const [myArticles, setMyArticles] = useState([]);
-  const cardWidth = Dimensions.get('window').width-20
+  const cardWidth = Dimensions.get('window').width - 20;
 
   useEffect(() => {
     setMyArticles(
@@ -23,21 +23,57 @@ const ViewStats = ({user}) => {
           article.authorName === user.firstName + ' ' + user.secondName,
       ),
     );
-  }, []);
+  }, [articles]);
 
-  const deleteHandler=()=>{
-    
-  }
+  const deleteHandler = (id)=> {
+    Alert.alert(
+      'Are you sure you want to delete?',
+      "Press 'No' to cancel\nPress 'Yes' to delete",
+      [
+        {
+          text: 'No',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            remove(ref(database, 'Articles/' + id)).then(snapshot => {
+              console.log('After deletion', snapshot);
+              Toast.success('Article deleted successfully', 'top');
+            });
+          },
+        },
+      ],
+    );
+  };
 
   return (
     <View>
-      <Text style={styles.title}>Your articles</Text>
+      <Text style={styles.title}>Your articles ({articles.length})</Text>
       {myArticles.map(article => (
-        <Card style={{backgroundColor:"#f9f9f9", width:cardWidth, marginBottom:30}} >
-          <Card.Title title={article.title}  titleVariant='titleMedium'/>
+        <Card
+        key={article.id}
+          style={{
+            backgroundColor: '#f9f9f9',
+            width: cardWidth,
+            marginBottom: 30,
+          }}>
+          <Card.Title title={article.title} titleVariant="titleMedium" />
           <Card.Actions>
-            <Button icon="pencil" style={{borderColor:primaryColor}} textColor={primaryColor}> Edit</Button>
-            <Button buttonColor='tomato' icon={"delete"} textColor='white' onPress={deleteHandler}>Delete</Button>
+            <Button
+              icon="pencil"
+              style={{borderColor: primaryColor}}
+              textColor={primaryColor}>
+              {' '}
+              Edit
+            </Button>
+            <Button
+              buttonColor="tomato"
+              icon={'delete'}
+              textColor="white"
+              onPress={()=>deleteHandler(article.id)
+              }>
+              Delete
+            </Button>
           </Card.Actions>
         </Card>
       ))}
@@ -263,15 +299,15 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 20,
   },
-  title:{
-    fontSize:25,
-    fontWeight:"bold",
-    marginVertical:30
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginVertical: 30,
   },
-  subTitle:{
-    fontSize:18,
-    fontWeight:"bold"
-  }
+  subTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
 
 export default Profile;
