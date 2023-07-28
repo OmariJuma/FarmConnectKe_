@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Text,
   Platform,
@@ -21,14 +21,15 @@ import {Toast} from 'toastify-react-native';
 
 const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>H1</Text>;
 
-const ArticleCreator = ({route}) => {
+const ArticleCreator = ({route, navigation}) => {
   const deviceWidth = Dimensions.get('window').width;
   const richText = React.useRef();
   const {user, insertedImg, setInsertedImg} = useContext(
     AuthenticatedUserContext,
   );
-  const [html, setHtmlText] = React.useState( route.params ? richText.current?.setContentHTML(route.params.article.text): '');
-  const [category, setCategory] = React.useState( route.params ? route.params.article.category : '');
+  const [isEditting, setIsEditting] = useState(false);
+  const [html, setHtmlText] = React.useState('' );
+  const [category, setCategory] = React.useState('');
   const showSuccessToast = () =>
     Toast.success('Article submitted successfully', 'top');
   var title;
@@ -52,28 +53,31 @@ const ArticleCreator = ({route}) => {
     id = randomWholeNumber;
   };
 
-  const clearEditorNRoute = ()=>{
-    richText.current?.setContentHTML("");
-    route.params.article.remove();
-  }
-  const clearEditor = ()=>{
-    richText.current?.setContentHTML("");
-
-  }
+  const clearEditorNRoute = () => {
+    setIsEditting(false);
+    setCategory('');
+    richText.current?.setContentHTML('');
+    route.params.article = null;
+  };
+  const clearEditor = () => {
+    richText.current?.setContentHTML('');
+    setCategory('');
+  };
 
   const handlePostSubmit = () => {
     // Check if the title, text, and image have valid values
-    if (!extractedTitle || !html) {
-      Toast.error('Title, text, or image is missing or invalid.', 'top');
-      return;
-    }
 
     const postId = uuid.v4();
     // Extract the image and title from the HTML
     const extractedTitle = extractTitle();
     generateRandomWholeNumber();
 
-    if (!route.params) {
+    if (!extractedTitle || !html) {
+      Toast.error('Title, text, or image is missing or invalid.', 'top');
+      return;
+    }
+
+    if (!isEditting) {
       set(ref(database, 'Articles/' + id), {
         id: id,
         title: title,
@@ -104,17 +108,24 @@ const ArticleCreator = ({route}) => {
         date: Date.now(),
         authorName: user.firstName + ' ' + user.secondName,
       })
-      .then(() => {
-        showSuccessToast();
-        setCategory('');
-        setHtmlText('');
-        richText.current?.setContentHTML('');
-      })
-      .catch(error => {
-        console.error('Error while submitting article:', error);
-      });
+        .then(() => {
+          showSuccessToast();
+          setCategory('');
+          setHtmlText('');
+          setIsEditting(false);
+          richText.current?.setContentHTML('');
+        })
+        .catch(error => {
+          console.error('Error while submitting article:', error);
+        });
     }
   };
+  useEffect(() => {
+    if (route.params?.article) {
+      setIsEditting(true);
+      richText.current?.setContentHTML(route.params?.article.text);
+    }
+  }, [route.params]);
   // console.log("from rich text", richText.current?.html)
   return (
     <SafeAreaView style={{flex: 1, padding: 20}}>
@@ -133,8 +144,24 @@ const ArticleCreator = ({route}) => {
               setHtmlText(descriptionText);
             }}
           />
-          {route.params && <Button buttonColor="#f9f9f9" textColor={primaryColor} style={styles.btnReset} onPress={clearEditorNRoute}>Reset Editor</Button>}
-          {!route.params && <Button buttonColor="#f9f9f9" textColor={primaryColor}  style={styles.btnReset} onPress={clearEditor}>Reset Editor</Button>}
+          {isEditting && (
+            <Button
+              buttonColor="#f9f9f9"
+              textColor={primaryColor}
+              style={styles.btnReset}
+              onPress={clearEditorNRoute}>
+              Reset Editor
+            </Button>
+          )}
+          {!isEditting && (
+            <Button
+              buttonColor="#f9f9f9"
+              textColor={primaryColor}
+              style={styles.btnReset}
+              onPress={clearEditor}>
+              Reset Editor
+            </Button>
+          )}
           <TextInput
             mode="outlined"
             style={{margin: 20}}
@@ -192,8 +219,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 50,
   },
-  btnReset:{
-    backgroundColor: "#f9f9f9",
+  btnReset: {
+    backgroundColor: '#f9f9f9',
     padding: 10,
     borderRadius: 10,
     width: '90%',
@@ -201,9 +228,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 50,
-    borderWidth:2,
-    borderColor: primaryColor
-  }
+    borderWidth: 2,
+    borderColor: primaryColor,
+  },
 });
 
 export default ArticleCreator;
