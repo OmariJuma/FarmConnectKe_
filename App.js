@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, {
   useEffect,
   useState,
@@ -25,8 +26,8 @@ import {
 import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
 import Profile from './Components/Pages/Profile';
-// import TempScreen from './Components/Pages/Editor';
 import ArticleCreator from './Components/Pages/Editor';
+import { createDrawerNavigator, DrawerItemList, DrawerItemList } from '@react-navigation/drawer';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -155,6 +156,34 @@ export default function App() {
         />
     </Stack.Navigator>
   );
+
+  const Drawer = createDrawerNavigator();
+  const DrawerContent = (props) => (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Home"  onPress={() => {}} />
+      <DrawerItem label="Bookmarks"  onPress={() => {}} />
+      <DrawerItem label="Create Article"  onPress={() => {}} />
+      <DrawerItem label="Customer Care"  onPress={() => {}} />
+      <DrawerItem label="Profile"  onPress={() => {}} />
+    </DrawerContentScrollView>
+  );
+
+  const DrawerNav = () => (
+    <Drawer.Navigator
+    initialRouteName="Home"
+    drawerContent={props => <DrawerContent {...props} />}
+    screenOptions={{
+      headerShown: false
+    }}
+    >
+      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Bookmark" component={Bookmark} />
+      <Drawer.Screen name="CreateArticle" component={ArticleCreator} />
+      <Drawer.Screen name="CustomerCare" component={CustomerCare} />
+      <Drawer.Screen name='Profile' component={Profile} />
+    </Drawer.Navigator>
+  )
   return (
     <>
       {isLoading && (
@@ -172,6 +201,7 @@ export default function App() {
             />
             <SafeAreaView style={styles.container}>
               <AuthenticatedUserProvider>
+                <DrawerNav />
                 <ChatStack />
               </AuthenticatedUserProvider>
             </SafeAreaView>
