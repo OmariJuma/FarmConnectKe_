@@ -6,9 +6,11 @@ import {primaryColor, primaryColorVariant} from '../UI/AppBar';
 import {AuthenticatedUserContext} from '../../Store/Provider';
 import {update, ref, onValue, remove} from 'firebase/database';
 import {Toast} from 'toastify-react-native';
-import {database} from '../../firebase';
+import {auth, database} from '../../firebase';
+import { signOut } from 'firebase/auth';
 
-const deviceWidth = Dimensions.get('window').width / 2 - 20;
+const deviceHalfWidth = Dimensions.get('window').width / 2 - 20;
+const deviceWidth = Dimensions.get('window').width-20;
 const textInputWidth = Dimensions.get('window').width - 50; // Calculate TextInput width
 
 const ViewStats = ({user, navigation}) => {
@@ -232,6 +234,13 @@ const Profile = ({navigation}) => {
     setUser(updatedUser);
     setShowEditProfile(false);
   };
+  const logOutHandler = () => {
+   auth.signOut().then((snapshot)=>{
+    console.log(snapshot)
+      Toast.success('Logged out successfully', 'top');
+      navigation.navigate('Login')
+    })
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -249,6 +258,15 @@ const Profile = ({navigation}) => {
           <Text style={styles.userText}>{user.phoneNo}</Text>
         </View>
       </View>
+      <Button
+          textColor={"white"}
+          style={{width:deviceWidth, marginBottom:30}}
+          buttonColor='tomato'
+          icon={'logout'}
+          onPress={logOutHandler}>
+        Log Out
+        </Button>
+
       <View style={styles.buttonContainer}>
         <Button
           textColor={!showEditProfile ? 'white' : primaryColor}
@@ -307,14 +325,14 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#f9f9f9',
-    width: deviceWidth,
+    width: deviceHalfWidth,
     marginHorizontal: 10,
     borderColor: primaryColor,
     borderWidth: 1,
   },
   buttonAlt: {
     backgroundColor: primaryColor,
-    width: deviceWidth,
+    width: deviceHalfWidth,
     marginHorizontal: 10,
   },
   input: {
