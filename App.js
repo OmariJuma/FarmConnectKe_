@@ -27,7 +27,7 @@ import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
 import Profile from './Components/Pages/Profile';
 import ArticleCreator from './Components/Pages/Editor';
-import { createDrawerNavigator, DrawerItemList, DrawerItemList } from '@react-navigation/drawer';
+import { createDrawerNavigator , DrawerItemList, DrawerContentScrollView, DrawerItem  } from '@react-navigation/drawer';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -117,6 +117,7 @@ export default function App() {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Tabs" component={NavTabs} />
+      <Stack.Screen name="Drawer" component={DrawerNav}/>
       <Stack.Screen name="editor" component={ArticleCreator} />
       <Stack.Screen
         name={ReadArticleName}
@@ -174,8 +175,12 @@ export default function App() {
     initialRouteName="Home"
     drawerContent={props => <DrawerContent {...props} />}
     screenOptions={{
-      headerShown: false
-    }}
+      headerShown: false,
+      drawerPosition:'right',
+      drawerIcon: (focused, color, size) => (
+        <Ionicons name="menu" size={size} color={color}/>
+      )}}
+  
     >
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Bookmark" component={Bookmark} />
@@ -201,7 +206,6 @@ export default function App() {
             />
             <SafeAreaView style={styles.container}>
               <AuthenticatedUserProvider>
-                <DrawerNav />
                 <ChatStack />
               </AuthenticatedUserProvider>
             </SafeAreaView>
