@@ -156,7 +156,7 @@ export default function Login({navigation}) {
           <Text style={{color: 'gray', fontWeight: '600', fontSize: 14}}>
             Don't have an account?{' '}
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+          <TouchableOpacity onPress={() => navigation.push('Signup')}>
             <Text
               style={{
                 color: primaryColorVariant,

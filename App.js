@@ -1,15 +1,12 @@
 import 'react-native-gesture-handler';
-import React, {
-  useEffect,
-  useState,
-} from 'react';
-import { PaperProvider} from 'react-native-paper';
+import React, {useContext, useEffect, useState} from 'react';
+import {PaperProvider} from 'react-native-paper';
 import {Image, Dimensions, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ToastManager from "toastify-react-native";
+import ToastManager from 'toastify-react-native';
 import {primaryColor} from './Components/UI/AppBar';
 import Home from './Components/Pages/Home';
 import ReadArticle from './Components/Pages/ReadArticle';
@@ -27,9 +24,15 @@ import Logo from './assets/farmConnect.png';
 import AllArticles from './Components/Pages/AllArticles';
 import Profile from './Components/Pages/Profile';
 import ArticleCreator from './Components/Pages/Editor';
-import { createDrawerNavigator , DrawerItemList, DrawerContentScrollView, DrawerItem  } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerItemList,
+  DrawerContentScrollView,
+  DrawerItem,
+} from '@react-navigation/drawer';
 
 export default function App() {
+  const {user} = useContext(AuthenticatedUserContext);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const deviceWidth = Dimensions.get('window').width;
@@ -37,8 +40,9 @@ export default function App() {
   const ReadArticleName = 'Read Article';
   const customerCare = 'Customer Care';
   const CreateArticle = 'Create Article';
-  const profileName= "Profile"
+  const profileName = 'Profile';
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -72,16 +76,15 @@ export default function App() {
           if (rn === homeName) {
             iconName = focused ? 'home' : 'home-outline';
           } else if (rn === CreateArticle) {
-            iconName = focused = "add-circle-sharp";
+            iconName = focused = 'add-circle-sharp';
           }
           //returning an icon component
           else if (rn == customerCare) {
             return (
               <AntDesign name={'customerservice'} size={size} color={color} />
             );
-          }
-          else if(rn == profileName){
-            iconName = focused = "person-circle";
+          } else if (rn == profileName) {
+            iconName = focused = 'person-circle';
             // return <Ionicons name={profileName} size={size} color={color} />;
           }
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -93,9 +96,9 @@ export default function App() {
         name={CreateArticle}
         component={ArticleCreator}
         options={{
-         headerShown: false,
+          headerShown: false,
           headerStyle: {
-            backgroundColor: "white",
+            backgroundColor: 'white',
           },
           headerTintColor: '#000',
           headerTitleStyle: {
@@ -105,19 +108,15 @@ export default function App() {
           headerTitle: 'Create Article',
         }}
       />
-      <Tab.Screen component={Profile} name={profileName}/>
-
+      <Tab.Screen component={Profile} name={profileName} />
     </Tab.Navigator>
   );
 
   const ChatStack = () => (
     <Stack.Navigator
-    initialRouteName='Login'
+      initialRouteName="Tabs"
       screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Tabs" component={NavTabs} />
-      <Stack.Screen name="Drawer" component={DrawerNav}/>
       <Stack.Screen name="editor" component={ArticleCreator} />
       <Stack.Screen
         name={ReadArticleName}
@@ -132,7 +131,7 @@ export default function App() {
             fontWeight: 'bold',
           },
           headerTitleAlign: 'center',
-          headerTitle:" ",
+          headerTitle: ' ',
         }}
       />
       <Stack.Screen
@@ -151,44 +150,38 @@ export default function App() {
           headerTitle: 'All Articles',
         }}
       />
-      <Stack.Screen 
-      name="Profile"
-      component={Profile}
-        />
+      <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>
   );
 
-  const Drawer = createDrawerNavigator();
-  const DrawerContent = (props) => (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem label="Home"  onPress={() => {}} />
-      <DrawerItem label="Bookmarks"  onPress={() => {}} />
-      <DrawerItem label="Create Article"  onPress={() => {}} />
-      <DrawerItem label="Customer Care"  onPress={() => {}} />
-      <DrawerItem label="Profile"  onPress={() => {}} />
-    </DrawerContentScrollView>
+  const Auth = createNativeStackNavigator();
+  const AuthStack = () => (
+    <Auth.Navigator       
+    screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
+      <Auth.Screen name="Login" component={Login} />
+      <Auth.Screen name="Signup" component={Signup} />
+    </Auth.Navigator>
   );
+
+  const Drawer = createDrawerNavigator();
 
   const DrawerNav = () => (
     <Drawer.Navigator
-    initialRouteName="Home"
-    drawerContent={props => <DrawerContent {...props} />}
-    screenOptions={{
-      headerShown: false,
-      drawerPosition:'right',
-      drawerIcon: (focused, color, size) => (
-        <Ionicons name="menu" size={size} color={color}/>
-      )}}
-  
-    >
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Bookmark" component={Bookmark} />
+      initialRouteName="ChatStack"
+      // drawerContent={props => <DrawerContent {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerPosition: 'right',
+        drawerIcon: () => (
+          <Ionicons name="menu" size={18} color={primaryColor} />
+        ),
+      }}>
+      <Drawer.Screen name="ChatStack" component={ChatStack} />
       <Drawer.Screen name="CreateArticle" component={ArticleCreator} />
       <Drawer.Screen name="CustomerCare" component={CustomerCare} />
-      <Drawer.Screen name='Profile' component={Profile} />
+      <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
-  )
+  );
   return (
     <>
       {isLoading && (
@@ -200,13 +193,10 @@ export default function App() {
       {!isLoading && (
         <PaperProvider>
           <NavigationContainer>
-            <ToastManager 
-            height={100}
-            width={deviceWidth-30}
-            />
+            <ToastManager height={100} width={deviceWidth - 30} />
             <SafeAreaView style={styles.container}>
               <AuthenticatedUserProvider>
-                <ChatStack />
+                { user ? <DrawerNav/> : <AuthStack/>}
               </AuthenticatedUserProvider>
             </SafeAreaView>
           </NavigationContainer>

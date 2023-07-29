@@ -66,7 +66,7 @@ export default function Signup({navigation}) {
           });
         })
         .then(updated => {
-          navigation.navigate('Login');
+          navigation.push('Login');
         })
         .catch(err =>{
           setIsLoading(false);
@@ -190,7 +190,7 @@ export default function Signup({navigation}) {
           <Text style={{color: 'gray', fontWeight: '600', fontSize: 14}}>
             Do you have an account?{' '}
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity onPress={() => navigation.push('Login')}>
             <Text
               style={{
                 color: primaryColorVariant,
