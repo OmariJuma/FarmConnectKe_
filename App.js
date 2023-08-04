@@ -30,6 +30,7 @@ import {
   DrawerContentScrollView,
   DrawerItem,
 } from '@react-navigation/drawer';
+import AdminHome from './Components/Pages/Admin/Home';
 
 export default function App() {
   const {user} = useContext(AuthenticatedUserContext);
@@ -113,9 +114,11 @@ export default function App() {
   );
 
   const ChatStack = () => (
-    <Stack.Navigator
-      initialRouteName="Tabs"
+<Stack.Navigator
+    initialRouteName='Login'
       screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Tabs" component={NavTabs} />
       <Stack.Screen name="editor" component={ArticleCreator} />
       <Stack.Screen
@@ -151,17 +154,10 @@ export default function App() {
         }}
       />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Admin Home" component={AdminHome} />
     </Stack.Navigator>
   );
 
-  const Auth = createNativeStackNavigator();
-  const AuthStack = () => (
-    <Auth.Navigator       
-    screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
-      <Auth.Screen name="Login" component={Login} />
-      <Auth.Screen name="Signup" component={Signup} />
-    </Auth.Navigator>
-  );
 
   const Drawer = createDrawerNavigator();
 
@@ -192,14 +188,14 @@ export default function App() {
       )}
       {!isLoading && (
         <PaperProvider>
+          <AuthenticatedUserProvider>
           <NavigationContainer>
             <ToastManager height={100} width={deviceWidth - 30} />
             <SafeAreaView style={styles.container}>
-              <AuthenticatedUserProvider>
-                { user ? <DrawerNav/> : <AuthStack/>}
-              </AuthenticatedUserProvider>
+              <ChatStack />
             </SafeAreaView>
           </NavigationContainer>
+          </AuthenticatedUserProvider>
         </PaperProvider>
       )}
     </>

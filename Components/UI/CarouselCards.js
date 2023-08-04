@@ -50,7 +50,9 @@ const CarouselCards = ({navigation}) => {
             marginStart: '25%',
             flexDirection: 'row',
             justifyContent: 'center',
-          }}>
+          }}
+          onPress={() => navigation.navigate('Admin Home')}
+          >
           <Text style={{color: 'white'}}>See more agents </Text>
           <Icon size={17} color="white" name="arrow-right" />
         </Button>

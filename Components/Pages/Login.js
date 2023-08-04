@@ -62,7 +62,7 @@ export default function Login({navigation}) {
               }
             },
           );
-          navigation.replace('Tabs');
+          navigation.replace("Tabs");
         })
         .catch(err => Toast.error('error message: ' + err.message, 'top'));
     } else if (!email.includes(['@' || '.'])) {

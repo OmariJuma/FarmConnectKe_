@@ -1,21 +1,14 @@
 import React, {createContext, useState} from 'react';
 
-export const AuthenticatedUserContext = createContext({
-  userId: '',
-  firstName: '',
-  secondName: '',
-  email: '',
-  phoneNo: '',
-  photoUrl: '',
-});
+export const AuthenticatedUserContext = createContext({});
 export const AuthenticatedUserProvider = ({children}) => {
   const [user, setUser] = useState({
-    userId:"",
-    firstName:"",
-    secondName:"",
-    email:"",
-    phoneNo:"",
-    photoUrl:""
+    userId:null,
+    firstName:null,
+    secondName:null,
+    email:null,
+    phoneNo:null,
+    photoUrl:null
   });
   const [articles, setArticles] = useState([]);
   const [insertedImg, setInsertedImg] = useState({
