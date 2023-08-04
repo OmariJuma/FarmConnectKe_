@@ -72,6 +72,7 @@ const ViewStats = ({user, navigation}) => {
       <Text style={styles.title}>Your articles ({articles.length})</Text>
       {myArticles.map(article => (
         <Card
+        // elevation={3}
         key={article.id}
           style={{
             backgroundColor: '#f9f9f9',
