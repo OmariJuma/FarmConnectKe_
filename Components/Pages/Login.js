@@ -58,6 +58,7 @@ export default function Login({navigation}) {
                   firstName: snapshot.val().firstName,
                   secondName: snapshot.val().secondName,
                   phoneNo: snapshot.val().phoneNo,
+                  userRole: snapshot.val().userRole
                 }));
               }
             },

@@ -63,6 +63,7 @@ export default function Signup({navigation}) {
             firstName: firstName,
             secondName: secondName,
             phoneNo: phoneNo,
+            userRole:"User"
           });
         })
         .then(updated => {

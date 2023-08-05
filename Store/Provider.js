@@ -8,7 +8,8 @@ export const AuthenticatedUserProvider = ({children}) => {
     secondName:null,
     email:null,
     phoneNo:null,
-    photoUrl:null
+    photoUrl:null,
+    userRole:null
   });
   const [articles, setArticles] = useState([]);
   const [insertedImg, setInsertedImg] = useState({

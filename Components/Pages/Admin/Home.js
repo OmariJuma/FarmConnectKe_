@@ -7,6 +7,7 @@ import { Card, Text } from 'react-native-paper';
 import { database } from '../../../firebase';
 import { ref, onValue } from 'firebase/database';
 import {Toast} from "toastify-react-native"
+import AppBar from '../../UI/AppBar';
 
 const AdminHome = () => {
   const [usersList, setUsersList] = useState([]);
@@ -62,7 +63,9 @@ const AdminHome = () => {
 
   return (
     <ScrollView style={styles.container}>
+      <AppBar/>
       <View style={styles.contentContainer}>
+        <Text style={{fontSize:28, textDecorationLine:"underline", marginVertical:20,}}>Highlights</Text>
         {itemsList.map((item, index) => (
           <Card key={index} style={{ width: screenWidth - 20, marginVertical: 25 }}>
             <Card.Cover source={item.image} />
