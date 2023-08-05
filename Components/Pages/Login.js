@@ -58,14 +58,21 @@ export default function Login({navigation}) {
                   firstName: snapshot.val().firstName,
                   secondName: snapshot.val().secondName,
                   phoneNo: snapshot.val().phoneNo,
-                  userRole: snapshot.val().userRole
-                }));
+                  userRole: snapshot.val().userRole,
+                }))
+                if (snapshot.val()?.userRole == 'Customer Care') {
+                  navigation.replace('AdminTabs');
+                } else {
+                  navigation.replace('UserTabs');
+                }
               }
             },
           );
-          navigation.replace("Tabs");
         })
-        .catch(err => Toast.error('error message: ' + err.message, 'top'));
+        .catch(err => {
+          setIsLoading(false);
+          Toast.error('error message: ' + err.message, 'top');
+        });
     } else if (!email.includes(['@' || '.'])) {
       setIsLoading(false);
       setError('Please enter a valid email address and password');
@@ -137,15 +144,19 @@ export default function Login({navigation}) {
         )}
 
         <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
-          {!isLoading&& <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
-            Log In
-          </Text>}
-          {isLoading && <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <ActivityIndicator size="large" color="white" />
+          {!isLoading && (
             <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
-              Logging In...
+              Log In
             </Text>
-          </View>}
+          )}
+          {isLoading && (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <ActivityIndicator size="large" color="white" />
+              <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}>
+                Logging In...
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
         <View
           style={{

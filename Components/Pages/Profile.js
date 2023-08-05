@@ -239,7 +239,7 @@ const Profile = ({navigation}) => {
    signOut(auth).then((snapshot)=>{
     console.log(snapshot)
       Toast.success('Logged out successfully', 'top');
-      navigation.navigate('Login')
+      navigation.replace('Login')
     })
   }
 
