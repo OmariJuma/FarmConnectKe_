@@ -12,7 +12,6 @@ import Bookmark from '../../Components/Pages/Bookmark';
 import CustomerCare from '../../Components/Pages/CustomerCare';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import AllArticles from '../../Components/Pages/AllArticles';
 import Profile from '../../Components/Pages/Profile';
 import ArticleCreator from '../../Components/Pages/Editor';
 import AdminHome from '../../Components/Pages/Admin/Home';
@@ -188,22 +187,6 @@ export const ChatStack = () => {
           },
           headerTitleAlign: 'center',
           headerTitle: ' ',
-        }}
-      />
-      <Stack.Screen
-        name="AllArticles"
-        component={AllArticles}
-        options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: primaryColor,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerTitleAlign: 'center',
-          headerTitle: 'All Articles',
         }}
       />
       <Stack.Screen name="Profile" component={Profile} />

@@ -38,7 +38,7 @@ const ArticleInfo = props => {
 const styles = StyleSheet.create({
   adtnlText: {
     color:{primaryColorVariant},
-    fontSize: 12,
+    fontSize: 15,
     fontWeight:"700"
   },
   miniContainer: {

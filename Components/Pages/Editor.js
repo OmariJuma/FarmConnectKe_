@@ -105,7 +105,7 @@ const ArticleCreator = ({route, navigation}) => {
         image: insertedImg.image,
         mimeType: insertedImg.mimeType,
         category: category,
-        date: Date.now(),
+        date: new Date().toLocaleString(),
         authorName: user.firstName + ' ' + user.secondName,
       })
         .then(() => {
