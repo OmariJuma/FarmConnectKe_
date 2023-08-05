@@ -10,9 +10,9 @@ const AppBar = () => {
 
     return (<Appbar.Header style={styles.container}>
         <Appbar.Content color={"white"} title="FarmConnectKe" subtitle={'Subtitle'} />
-         <Appbar.Action color={"white"} icon="magnify" onPress={() => {}} />
+         {/* <Appbar.Action color={"white"} icon="magnify" onPress={() => {}} />
          <Appbar.Action color={"white"} icon={MORE_ICON} onPress={() => {}} />
-         <Appbar.Action color={"white"} icon="menu" onPress={()=>{}} />
+         <Appbar.Action color={"white"} icon="menu" onPress={()=>{}} /> */}
      </Appbar.Header>
   );
 }

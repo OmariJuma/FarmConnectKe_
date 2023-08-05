@@ -81,7 +81,7 @@ export default function Chat() {
         backgroundColor: '#fff',
       }}
       textInputStyle={{
-        backgroundColor: '#fff',
+        backgroundColor: '#f9f9f9',
         borderRadius: 20,
       }}
       user={{
