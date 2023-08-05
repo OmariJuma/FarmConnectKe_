@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   backImage: {
+    marginTop:20,
     width: 100,
     height: 100,
     alignSelf: 'center',

@@ -18,6 +18,7 @@ import { auth } from '../../../firebase';
 import {database} from '../../../firebase';
 import {primaryColor, primaryColorVariant} from '../../UI/AppBar';
 import {Toast } from "toastify-react-native"
+import sendEmail from '../../Utility/SendEmail';
 const backImage = require('../../../assets/signup.png');
 
 
@@ -27,7 +28,7 @@ const AddUser = () => {
     const [secondName, setSecondName] = useState('');
     const [phoneNo, setPhoneNo] = useState('');
     const [error, setError] = useState('');
-    const [value, setValue] = useState('User');
+    const [value, setValue] = useState('Customer Care');
     const [isLoading, setIsLoading] = useState(false);
   
     const onHandleSignup = () => {
@@ -41,6 +42,7 @@ const AddUser = () => {
       ) {
         const password = email.slice(0, 4) + phoneNo.slice(0, 4)
         console.log("The password is ", password);
+        sendEmail(email,firstName,password);
         createUserWithEmailAndPassword(auth, email, password)
           .then(credentials => {
             setIsLoading(false);
@@ -88,11 +90,12 @@ const AddUser = () => {
         <Image source={backImage} style={styles.backImage} />
         <View style={styles.whiteSheet} />
         <SafeAreaView style={styles.form}>
-          <Text style={styles.title}>Create an Account today</Text>
+          <Text style={styles.title}>Create Account </Text>
           <TextInput
             mode="outlined"
             label="Enter First Name"
             placeholder="eg. John"
+            value={firstName}
             style={{marginBottom: 20}}
             onChangeText={text => setFirstName(text)}
           />
@@ -100,6 +103,7 @@ const AddUser = () => {
             mode="outlined"
             label="Enter Second Name"
             placeholder="eg. Doe"
+            value={secondName}
             style={{marginBottom: 20}}
             onChangeText={text => setSecondName(text)}
           />
@@ -108,6 +112,7 @@ const AddUser = () => {
             label="Enter phone number"
             placeholder="eg. 07xxxxxxxx"
             textContentType="telephoneNumber"
+            value={phoneNo}
             style={{marginBottom: 20}}
             onChangeText={text => setPhoneNo(text)}
           />
@@ -125,8 +130,8 @@ const AddUser = () => {
           />
           <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
           <Text>Select User Role</Text>
-                <RadioButton.Item label='Normal User' value="User" />
                 <RadioButton.Item label="Customer Care Agent" value="Customer Care" />
+                <RadioButton.Item label='Normal User' value="User" />
         </RadioButton.Group>
           {error && (
             <Text
@@ -188,6 +193,7 @@ const AddUser = () => {
       padding: 12,
     },
     backImage: {
+      marginTop:20,
       width: 100,
       height: 100,
       alignSelf: 'center',
