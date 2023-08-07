@@ -180,22 +180,21 @@ export const ChatStack = () => {
       <Stack.Screen name="All Users" component={AllUsers} />
       <Stack.Screen name="All Articles" component={AllArticles}  />
       <Stack.Screen name="All Chats" component={AllChats} />
-
-
+      <Stack.Screen name="Customer Care" component={CustomerCare} />
       <Stack.Screen
         name={ReadArticleName}
         component={ReadArticle}
         options={{
           headerShown: true,
-          headerStyle: {
-            backgroundColor: primaryColor,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerTitleAlign: 'center',
-          headerTitle: ' ',
+          // headerStyle: {
+          //   backgroundColor: primaryColor,
+          // },
+          // headerTintColor: '#fff',
+          // headerTitleStyle: {
+          //   fontWeight: 'bold',
+          // },
+          // headerTitleAlign: 'center',
+          // headerTitle: ' ',
         }}
       />
       <Stack.Screen name="Profile" component={Profile} />

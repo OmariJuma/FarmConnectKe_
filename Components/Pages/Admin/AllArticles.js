@@ -71,9 +71,17 @@ const AllArticles = ({route, navigation}) => {
           <Card.Content>{/* <Text>{article.text}</Text> */}</Card.Content>
           <Card.Actions>
             <Button
+              icon="book"
+              textColor={"white"}
+              buttonColor={primaryColor}
+              onPress={() => navigation.navigate('Read Article', {articleId: article.id})}>
+              Read Article
+            </Button>
+            <Button
               icon="pencil"
-              style={{borderColor: primaryColor}}
+              style={{borderColor: primaryColor, borderWidth:1}}
               textColor={primaryColor}
+              buttonColor='white'
               onPress={() => navigation.navigate('editor', {article: article})}>
               Edit
             </Button>
