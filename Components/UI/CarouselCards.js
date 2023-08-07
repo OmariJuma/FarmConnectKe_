@@ -51,8 +51,9 @@ const CarouselCards = ({navigation}) => {
             flexDirection: 'row',
             justifyContent: 'center',
           }}
+          onPress={() => navigation.navigate('Customer Care')}
           >
-          <Text style={{color: 'white'}}>See more agents </Text>
+          <Text style={{color: 'white'}}>Chat with us</Text>
           <Icon size={17} color="white" name="arrow-right" />
         </Button>
       </TouchableOpacity>
