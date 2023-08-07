@@ -17,6 +17,9 @@ import ArticleCreator from '../../Components/Pages/Editor';
 import AdminHome from '../../Components/Pages/Admin/Home';
 import AddUser from '../../Components/Pages/Admin/AddUser';
 import {AuthenticatedUserContext} from '../../Store/Provider';
+import AllUsers from '../Pages/Admin/AllUsers';
+import AllArticles from '../Pages/Admin/AllArticles';
+import AllChats from '../Pages/Admin/AllChats';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,6 +87,7 @@ const UserNavTabs = () => (
       }}
     />
     <Tab.Screen component={Profile} name={profileName} />
+    
   </Tab.Navigator>
 );
 
@@ -167,12 +171,17 @@ export const ChatStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="Login"
-      screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="AdminTabs" component={AdminStack} /> 
-      <Stack.Screen name="UserTabs" component={UserNavTabs} />
+      screenOptions={{ animation: 'slide_from_right'}}>
+      <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
+      <Stack.Screen name="Signup" component={Signup} options={{headerShown:false}}/>
+      <Stack.Screen name="AdminTabs" component={AdminStack} options={{headerShown:false}}/> 
+      <Stack.Screen name="UserTabs" component={UserNavTabs} options={{headerShown:false}}/>
       <Stack.Screen name="editor" component={ArticleCreator} />
+      <Stack.Screen name="All Users" component={AllUsers} />
+      <Stack.Screen name="All Articles" component={AllArticles}  />
+      <Stack.Screen name="All Chats" component={AllChats} />
+
+
       <Stack.Screen
         name={ReadArticleName}
         component={ReadArticle}

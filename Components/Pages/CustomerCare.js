@@ -74,7 +74,7 @@ export default function Chat() {
     <GiftedChat
       messages={messages.reverse()}
       showAvatarForEveryMessage={true}
-      showUserAvatar={true}
+      showUserAvatar={false}
       inverted={true}
       onSend={messages => onSend(messages)}
       messagesContainerStyle={{

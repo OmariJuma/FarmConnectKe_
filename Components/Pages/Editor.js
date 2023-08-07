@@ -123,6 +123,7 @@ const ArticleCreator = ({route, navigation}) => {
   useEffect(() => {
     if (route.params?.article) {
       setIsEditting(true);
+      setCategory(route.params?.article.category);
       richText.current?.setContentHTML(route.params?.article.text);
     }
   }, [route.params]);

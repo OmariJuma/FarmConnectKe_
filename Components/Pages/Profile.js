@@ -69,7 +69,7 @@ const ViewStats = ({user, navigation}) => {
 
   return (
     <View>
-      <Text style={styles.title}>Your articles ({articles.length})</Text>
+      <Text style={styles.title}>Your articles ({myArticles.length})</Text>
       {myArticles.map(article => (
         <Card
         // elevation={3}

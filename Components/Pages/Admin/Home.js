@@ -9,7 +9,7 @@ import { ref, onValue } from 'firebase/database';
 import {Toast} from "toastify-react-native"
 import AppBar from '../../UI/AppBar';
 
-const AdminHome = () => {
+const AdminHome = ({navigation}) => {
   const [usersList, setUsersList] = useState([]);
   const [articlesList, setArticlesList] = useState([]);
   const [chatsList, setChatsList] = useState([]);
@@ -56,9 +56,9 @@ const AdminHome = () => {
   }, []);
 
   const itemsList = [
-    { itemName: 'Users', image: image1, count: usersList.length },
-    { itemName: 'Articles', image: image2, count: articlesList.length },
-    { itemName: 'Chats', image: image3, count: chatsList.length },
+    { itemName: 'Users', image: image1, count: usersList.length, screen: "All Users", data: usersList },
+    { itemName: 'Articles', image: image2, count: articlesList.length, screen: "All Articles", data: articlesList },
+    { itemName: 'Chats', image: image3, count: chatsList.length, screen: "All Chats", data: chatsList },
   ];
 
   return (
@@ -67,7 +67,7 @@ const AdminHome = () => {
       <View style={styles.contentContainer}>
         <Text style={{fontSize:28, textDecorationLine:"underline", marginVertical:20,}}>Highlights</Text>
         {itemsList.map((item, index) => (
-          <Card key={index} style={{ width: screenWidth - 20, marginVertical: 25 }}>
+          <Card key={index} style={{ width: screenWidth - 20, marginVertical: 25 }} onPress={()=>navigation.navigate(item.screen, {data: item.data})}>
             <Card.Cover source={item.image} />
             <Card.Title
               title={`Total ${item.itemName}: ${item.count}`}
